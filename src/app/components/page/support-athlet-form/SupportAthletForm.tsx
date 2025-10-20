@@ -1,12 +1,14 @@
 'use client'
+import { useCreateDonationMutation } from '@/app/store/service/donationApis'
 import { Button, Checkbox, Divider, Form, Input, Select } from 'antd'
+import { useRouter } from 'next/navigation'
 import React from 'react'
+import toast from 'react-hot-toast'
 import { BsExclamationOctagon } from 'react-icons/bs'
 
-type FundOption = 'IGNITE Fund' | 'IGNITE a Child'
+type FundOption = 'IGNITE_FUND' | 'IGNITE_A_CHILD'
 type AmountTier = 'Spark' | 'Flame' | 'Blaze' | 'Inferno' | 'Custom'
-type Frequency = 'One Time' | 'Monthly' | 'Yearly'
-
+type Frequency = 'One-time' | 'Weekly' | 'Monthly' | 'Yearly'
 const AMOUNT_MAP: Record<Exclude<AmountTier, 'Custom'>, number> = {
     Spark: 10,
     Flame: 25,
@@ -26,9 +28,11 @@ function SupportAthletForm() {
     const customAmount = Form.useWatch<number>('customAmount', form)
     const coverFee = Form.useWatch<boolean>('coverFee', form)
     const frequency = Form.useWatch<Frequency>('frequency', form)
+    const [createDonation, { isLoading }] = useCreateDonationMutation()
+    const router = useRouter()
 
     const baseAmount = (() => {
-        if (fund === 'IGNITE a Child') return 1000
+        if (fund === 'IGNITE_A_CHILD') return 1000
         if (tier === 'Custom') return Number(customAmount) || 0
         if (!tier) return 0
         return AMOUNT_MAP[tier]
@@ -37,10 +41,10 @@ function SupportAthletForm() {
     const fee = coverFee ? +(baseAmount * 0.03).toFixed(2) : 0
     const total = +(baseAmount + fee).toFixed(2)
 
-    const showFrequency = fund === 'IGNITE Fund'
-    const showCustom = tier === 'Custom' && fund === 'IGNITE Fund'
+    const showFrequency = fund === 'IGNITE_FUND'
+    const showCustom = tier === 'Custom' && fund === 'IGNITE_FUND'
 
-    const amountOptions = fund === 'IGNITE a Child'
+    const amountOptions = fund === 'IGNITE_A_CHILD'
         ? [{ value: 'Custom', label: '$1000' }]
         : [
             { value: 'Spark', label: 'Spark ($10)' },
@@ -51,7 +55,7 @@ function SupportAthletForm() {
         ]
 
     const summaryTitle = (() => {
-        if (fund === 'IGNITE a Child') return 'IGNITE a Child Donation'
+        if (fund === 'IGNITE_A_CHILD') return 'IGNITE a Child Donation'
         if (!tier) return 'Donation Summary'
         const freqLabel = showFrequency && frequency ? ` ${frequency}` : ''
         const tierLabel = tier === 'Custom' ? 'Custom' : tier
@@ -59,7 +63,7 @@ function SupportAthletForm() {
     })()
 
     const onValuesChange = (changed: any) => {
-        if (changed.fund === 'IGNITE a Child') {
+        if (changed.fund === 'IGNITE_A_CHILD') {
             form.setFieldsValue({ frequency: undefined, amountTier: 'Custom', customAmount: 1000 })
         }
 
@@ -68,24 +72,41 @@ function SupportAthletForm() {
         }
     }
 
-    const onFinish = (values: any) => {
-        const payload = {
-            fund: values.fund as FundOption,
-            amountTier: values.amountTier as AmountTier,
-            customAmount: values.customAmount ? Number(values.customAmount) : undefined,
-            frequency: showFrequency ? (values.frequency as Frequency) : undefined,
-            coverFee: !!values.coverFee,
-            baseAmount,
-            fee,
-            total,
+    const onFinish = async (values: any) => {
+        try {
+            const payload = {
+                fund: values.fund as FundOption,
+                amountTier: values.amountTier as AmountTier,
+                customAmount: values.customAmount ? Number(values.customAmount) : undefined,
+                frequency: showFrequency ? (values.frequency as Frequency) : undefined,
+                coverFee: !!values.coverFee,
+                total,
+            }
+            const finalPayload = {
+                amount: payload.total,
+                fundType: payload.fund,
+                ...payload.frequency !== undefined && { frequency: payload.frequency },
+                freeCovered: payload.coverFee
+            }
+            const response = await createDonation(finalPayload).unwrap()
+            if (!response?.success) throw new Error(response?.message)
+            if (response?.success) {
+                toast.success(response?.message)
+                form.resetFields()
+                if (window !== undefined) {
+                    window.open(response?.data?.paymentUrl, '_blank')
+                } else {
+                    router.push(response?.data?.paymentUrl)
+                }
+            }
+        } catch (error: any) {
+            toast.error(error?.data?.message || error?.message || 'Something went wrong')
         }
-
-        console.log('Donation submission:', payload)
     }
 
     return (
         <div>
-            {fund === 'IGNITE a Child' && <div className="p-4 bg-[#4176FC0D] border border-[#4176FC]/50 mb-12 text-[#2863FA] mt-4 rounded-xl flex gap-2 justify-start items-start">
+            {fund === 'IGNITE_A_CHILD' && <div className="p-4 bg-[#4176FC0D] border border-[#4176FC]/50 mb-12 text-[#2863FA] mt-4 rounded-xl flex gap-2 justify-start items-start">
                 <BsExclamationOctagon className="leading-none m-0 p-0" size={20} />
                 <h1 className="flex gap-2">$1000 downpayment – full costs will range from $1500 to $8000+</h1>
             </div>}
@@ -93,7 +114,7 @@ function SupportAthletForm() {
                 form={form}
                 requiredMark={false}
                 layout='vertical'
-                initialValues={{ coverFee: true, fund: 'IGNITE Fund', frequency: 'One Time' }}
+                initialValues={{ coverFee: true, fund: 'IGNITE_FUND', frequency: 'One Time' }}
                 onValuesChange={onValuesChange}
                 onFinish={onFinish}
             >
@@ -106,8 +127,8 @@ function SupportAthletForm() {
                         size='large'
                         placeholder="Select a Fund to Support"
                         options={[
-                            { value: 'IGNITE Fund', label: 'IGNITE Fund - Donate to our general fund that is dispersed to many athletes.' },
-                            { value: 'IGNITE a Child', label: 'IGNITE a Child - Champion Donor - Support a Child directly, and commit to covering their full costs.' },
+                            { value: 'IGNITE_FUND', label: 'IGNITE Fund - Donate to our general fund that is dispersed to many athletes.' },
+                            { value: 'IGNITE_A_CHILD', label: 'IGNITE a Child - Champion Donor - Support a Child directly, and commit to covering their full costs.' },
                         ]}
                     />
                 </Form.Item>
@@ -121,7 +142,7 @@ function SupportAthletForm() {
                         size='large'
                         placeholder="Donation Amount"
                         options={amountOptions}
-                        disabled={fund === 'IGNITE a Child'}
+                        disabled={fund === 'IGNITE_A_CHILD'}
                     />
                 </Form.Item>
 
@@ -154,7 +175,8 @@ function SupportAthletForm() {
                             size='large'
                             placeholder="Donation Frequency"
                             options={[
-                                { value: 'One Time', label: 'One Time' },
+                                { value: 'One-time', label: 'One-time' },
+                                { value: 'Weekly', label: 'Weekly' },
                                 { value: 'Monthly', label: 'Monthly' },
                                 { value: 'Yearly', label: 'Yearly' },
                             ]}
@@ -186,15 +208,16 @@ function SupportAthletForm() {
 
                 <Form.Item shouldUpdate>
                     <Button
+                        loading={isLoading}
                         style={{
-                            background: 'linear-gradient(180deg, #BF0A30 0%, #003F91 100%)',
+                            background: baseAmount <= 0 ? '#ccc' : 'linear-gradient(180deg, #BF0A30 0%, #003F91 100%)',
                             color: '#fff',
                             border: 'none',
                             padding: '12px 24px',
                             fontSize: '16px',
                             fontWeight: 'bold',
-                            cursor: 'pointer',
                             transition: 'all 0.3s ease',
+                            cursor: baseAmount <= 0 ? 'not-allowed' : 'pointer',
                         }}
                         size="large"
                         htmlType="submit"

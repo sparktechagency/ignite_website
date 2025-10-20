@@ -5,6 +5,7 @@ import Header from "./components/common/Header";
 import ReduxProvider from "./providers/ReduxProvider";
 import { ConfigProvider, ThemeConfig } from "antd";
 import Footer from "./components/common/Footer";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +53,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiasedp`}
       >
         <ReduxProvider>
+           <Toaster position="top-center" toastOptions={{ duration: 1500 }} />
           <Header />
           <ConfigProvider theme={themeConfig}>
             <div className=" px-1">{children}</div>
