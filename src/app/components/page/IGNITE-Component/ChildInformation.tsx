@@ -4,28 +4,14 @@ import { Form, Input, Select, Row, Col, DatePicker, Divider } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setChildInfo, type ChildInfo } from '../../../store/features/applyIgnite/applyIgniteSlice'
 import dayjs, { Dayjs } from 'dayjs'
+import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
 
 export type ChildInformationHandle = { validate: () => Promise<any> }
 
-interface SportType {
-  value: 'baseball' | 'basketball' | 'cheer' | 'football' | 'gymnastics' | 'ice hockey' | 'lacrosse' | 'soccer' | 'softball' | 'track & field' | 'volleyball' | 'other'
-  label: string
+export interface SportType {
+  _id: string
+  name: string
 }
-
-const sports: SportType[] = [
-  { value: 'baseball', label: 'Baseball' },
-  { value: 'basketball', label: 'Basketball' },
-  { value: 'cheer', label: 'Cheer' },
-  { value: 'football', label: 'Football' },
-  { value: 'gymnastics', label: 'Gymnastics' },
-  { value: 'ice hockey', label: 'Ice Hockey' },
-  { value: 'lacrosse', label: 'Lacrosse' },
-  { value: 'soccer', label: 'Soccer' },
-  { value: 'softball', label: 'Softball' },
-  { value: 'track & field', label: 'Track & Field' },
-  { value: 'volleyball', label: 'Volleyball' },
-  { value: 'other', label: 'Other' },
-]
 
 const gender: { value: 'male' | 'female' | 'other', label: string }[] = [
   { value: 'male', label: 'Male' },
@@ -37,6 +23,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
   const dispatch = useAppDispatch()
   const childInfo = useAppSelector(s => s.applyIgnite.childInfo)
   const [form] = Form.useForm<any>()
+  const { data: categoryData } = useGetCategoryQuery(undefined)
 
   useEffect(() => {
     const mapped = {
@@ -69,7 +56,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
           const dob: Dayjs | null | undefined = allValues?.ChildsDateOfBirth
           const next: Partial<ChildInfo> = {
             ...allValues,
-            ChildsDateOfBirth: dob ? dob.toDate() : null,
+            ChildsDateOfBirth: dob ? dob.format('YYYY-MM-DD') : null,
           }
           dispatch(setChildInfo(next as any))
         }}
@@ -81,7 +68,10 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
                 placeholder='Select Child’s Sport'
                 allowClear
                 size='large'
-                options={sports}
+                options={categoryData?.data?.result?.length ? categoryData?.data?.result?.map((item: SportType) => ({
+                  value: item._id,
+                  label: item.name,
+                })) : []}
               />
             </Form.Item>
           </Col>

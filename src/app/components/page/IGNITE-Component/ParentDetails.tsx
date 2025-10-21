@@ -70,7 +70,7 @@ const ParentDetails = React.forwardRef<ParentDetailsHandle, {}>(function ParentD
             </Form.Item>
           </Col>
           <Col xs={24} md={8}>
-            <Form.Item name="ParentState" label="Zip/Postal Code" rules={[{ required: true }]}>
+            <Form.Item name="ParentZipCode" label="Zip/Postal Code" rules={[{ required: true }]}>
               <Input placeholder='Enter your Zip/Postal Code' size="large" />
             </Form.Item>
           </Col>

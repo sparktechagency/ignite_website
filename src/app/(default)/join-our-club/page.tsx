@@ -2,13 +2,19 @@
 import SectionLayout from '@/app/components/component-layout/SectionLayout'
 import PageTopBanner from '@/app/components/status-banner/PageTopBanner'
 import { IMAGE } from '@/app/constant/index.image'
+import { useClubJoinFeeQuery } from '@/app/store/service/clubApis'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 function Page() {
     const [quantity, setQuantity] = useState(1)
-    const [subscribed, setSubscribed] = useState(false)
+    const [subscribed, setSubscribed] = useState(true)
+    const { data: clubJoinFee } = useClubJoinFeeQuery(undefined)
+
+    const router = useRouter()
 
     return (
         <div className="min-h-screen">
@@ -27,11 +33,11 @@ function Page() {
 
                         <div>
                             <h3 className="text-xl sm:text-2xl font-semibold text-[#003F91]">
-                                Launch Price: $250
+                                Launch Price: ${clubJoinFee?.data?.fee || 0}
                             </h3>
-                            <p className="text-gray-500 line-through text-sm">
-                                Original Price (lined thru): $499/year
-                            </p>
+                            {clubJoinFee?.data?.isDiscountActive && <p className="text-gray-500 line-through text-sm">
+                                Original Price: ${clubJoinFee?.data?.fee + clubJoinFee?.data?.discountAmount || 0}/year
+                            </p>}
                         </div>
 
                         <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
@@ -88,7 +94,24 @@ function Page() {
                         </div>
 
 
-                        <button className="mt-8 cursor-pointer bg-gradient-to-r from-[#7B1113] to-[#003F91] text-white px-6 py-3 rounded font-semibold hover:opacity-90 transition">
+                        <button
+                            disabled={!quantity || !subscribed}
+                            onClick={() => {
+                                if (!quantity || !subscribed) {
+                                    return
+                                }
+                                if (Cookies.get('clubInfo')) {
+                                    Cookies.remove('clubInfo')
+                                }
+                                Cookies.set('clubInfo', JSON.stringify({
+                                    quantity,
+                                    subscribed,
+                                }))
+                                router.push('/join-our-club/club-details')
+                            }}
+                            className={cn("mt-8 cursor-pointer bg-gradient-to-r from-[#7B1113] to-[#003F91] text-white px-6 py-3 rounded font-semibold hover:opacity-90 transition", {
+                                'opacity-50 cursor-not-allowed': !quantity || !subscribed
+                            })}>
                             Join Now
                         </button>
                     </div>

@@ -4,7 +4,7 @@ export interface ChildInfo {
     ChildsSport: string | null
     ChildsFirstName: string | null
     ChildsLastName: string | null
-    ChildsDateOfBirth: Date | null
+    ChildsDateOfBirth: string | null
     ChildsGender: string | null
 }
 
@@ -17,7 +17,7 @@ export interface ParentDetails {
     ParentCity: string | null
     ParentState: string | null
     ParentZipCode: string | null
-    AnnualHouseholdIncome: string | null
+    AnnualHouseholdIncome: number | string | null
 }
 
 export interface AboutChild {

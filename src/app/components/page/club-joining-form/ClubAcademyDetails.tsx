@@ -3,39 +3,16 @@ import React, { useEffect } from 'react'
 import { Form, Input, Select, Row, Col, Divider } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setClubInfo, type ClubInfo } from '../../../store/features/applyClubSlice'
+import { SportType } from '../IGNITE-Component/ChildInformation'
+import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
 
 export type ClubAcademyDetailsHandle = { validate: () => Promise<any> }
-
-interface SportType {
-    value: 'baseball' | 'basketball' | 'cheer' | 'football' | 'gymnastics' | 'ice hockey' | 'lacrosse' | 'soccer' | 'softball' | 'track & field' | 'volleyball' | 'other'
-    label: string
-}
-
-const sports: SportType[] = [
-    { value: 'baseball', label: 'Baseball' },
-    { value: 'basketball', label: 'Basketball' },
-    { value: 'cheer', label: 'Cheer' },
-    { value: 'football', label: 'Football' },
-    { value: 'gymnastics', label: 'Gymnastics' },
-    { value: 'ice hockey', label: 'Ice Hockey' },
-    { value: 'lacrosse', label: 'Lacrosse' },
-    { value: 'soccer', label: 'Soccer' },
-    { value: 'softball', label: 'Softball' },
-    { value: 'track & field', label: 'Track & Field' },
-    { value: 'volleyball', label: 'Volleyball' },
-    { value: 'other', label: 'Other' },
-]
-
-const gender: { value: 'male' | 'female' | 'other', label: string }[] = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' },
-    { value: 'other', label: 'Other' },
-]
 
 const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(function ClubAcademyDetails(_, ref) {
     const dispatch = useAppDispatch()
     const clubInfo = useAppSelector(s => s.applyClub.clubInfo)
     const [form] = Form.useForm<ClubInfo>()
+    const { data: categoryData, isLoading } = useGetCategoryQuery(undefined)
 
     useEffect(() => {
         form.setFieldsValue(clubInfo as any)
@@ -75,11 +52,15 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
                     <Col xs={24} md={24} >
                         <Form.Item name="sportOffered" label="Sport Offered ( Multiple Choses )" rules={[{ required: true }]}>
                             <Select
+                            loading={isLoading}
                                 mode="multiple"
                                 placeholder='Select Child’s Sport'
                                 allowClear
                                 size='large'
-                                options={sports}
+                                options={categoryData?.data?.result?.length ? categoryData?.data?.result?.map((item: SportType) => ({
+                                    value: item._id,
+                                    label: item.name,
+                                })) : []}
                             />
                         </Form.Item>
                     </Col>
