@@ -17,6 +17,7 @@ interface teamTypes {
 
 function MeetOurTeam() {
     const { data: teamData, isLoading } = useGetTeamQuery(undefined)
+    console.log(teamData)
     if (isLoading) {
         return (
             <div className="grid max-w-7xl px-2 mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -34,7 +35,7 @@ function MeetOurTeam() {
                 className='my-12'
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {teamData?.data?.result?.map((item: teamTypes, index: number) => (
+                {teamData?.map((item: teamTypes, index: number) => (
                     <TeamMember key={index} {...item} />
                 ))}
             </div>

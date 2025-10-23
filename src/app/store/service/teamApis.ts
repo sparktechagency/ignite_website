@@ -7,6 +7,7 @@ const teamApis = baseApis.injectEndpoints({
                 url: '/member/get-all',
                 method: 'GET',
             }),
+            transformResponse: (response: any) => response?.data?.result?.reverse(),
             providesTags: ['team']
         })
     })
