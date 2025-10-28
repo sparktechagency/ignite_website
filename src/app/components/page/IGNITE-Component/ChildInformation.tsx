@@ -13,10 +13,9 @@ export interface SportType {
   name: string
 }
 
-const gender: { value: 'Male' | 'Female' | 'Others', label: string }[] = [
+const gender: { value: 'Male' | 'Female', label: string }[] = [
   { value: 'Male', label: 'Male' },
   { value: 'Female', label: 'Female' },
-  { value: 'Others', label: 'Others' },
 ]
 
 const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function ChildInformation(_, ref) {

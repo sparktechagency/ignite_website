@@ -51,7 +51,12 @@ const AboutYourChild = React.forwardRef<AboutYourChildHandle, {}>(function About
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="ShowcasingOptIn" label="Showcasing Opt-in" valuePropName="checked">
+            <Form.Item name="ShowcasingOptIn" label={
+              <div className='flex flex-col gap-1'>
+                <span>Showcasing Option</span>
+                <small className='text-gray-500'>Allow IGNITE to share your child's highlight reels with prospective clubs & academies.</small>
+              </div>
+            } valuePropName="checked">
               <ConfigProvider theme={{
                 components: {
                   Radio: {
