@@ -1,4 +1,4 @@
-export const url: string = "http://10.10.20.9:5070"
+export const url: string = "https://api.ignitefoundation.us"
 
 export const imageUrl = ({ image }: { image: string }) => {
     if (!image) return "https://placehold.co/400"
