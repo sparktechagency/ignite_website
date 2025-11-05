@@ -6,6 +6,7 @@ import React from 'react'
 import SectionHeaderText from '../../status-banner/SectionHeaderText';
 import { useGetTeamQuery } from '@/app/store/service/teamApis';
 import { imageUrl } from '@/app/utils/imageUtils';
+import SEO from '../../seo/SEO';
 
 interface teamTypes {
     _id: string;
@@ -49,6 +50,16 @@ export default MeetOurTeam
 const TeamMember = ({ name, profile_image, position }: teamTypes) => {
     return (
         <div className='border rounded-md p-2 border-gray-200 bg-white'>
+            <SEO
+                title="Meet Our Team"
+                description="Meet our dedicated team working tirelessly to ignite the potential of every young athlete."
+                keywords={['join', 'network', 'elite coaching', 'competitive programming', 'providers', 'athletes', 'athletic goals', 'youth sports', 'athletics', 'sports foundation', 'youth development', 'sports programs', 'youth empowerment', 'youth leadership', 'community sports', 'sports education', 'youth fitness', 'youth mentoring', 'sports coaching', 'youth tournaments', 'sports scholarships', 'youth wellness', 'team', 'athletes', 'athletic goals', 'youth sports', 'athletics', 'sports foundation', 'youth development', 'sports programs', 'youth empowerment', 'youth leadership', 'community sports', 'sports education', 'youth fitness', 'youth mentoring', 'sports coaching', 'youth tournaments', 'sports scholarships', 'youth wellness']}
+                ogImage="/assets/image/about-us.png"
+                article={{
+                    authors: ['IGNITE Foundation'],
+                    tags: ['youth sports', 'athletics', 'sports foundation', 'youth development', 'sports programs', 'youth empowerment', 'youth leadership', 'community sports', 'sports education', 'youth fitness', 'youth mentoring', 'sports coaching', 'youth tournaments', 'sports scholarships', 'youth wellness']
+                }}
+            />
             <div className='w-full h-auto rounded-md overflow-hidden aspect-square'>
                 <Image
                     src={imageUrl({ image: profile_image })}
