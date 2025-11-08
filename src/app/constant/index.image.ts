@@ -18,6 +18,8 @@ import students from "@/../public/assets/image/sports-teacher-with-her-students.
 import vice from "@/../public/assets/image/vice.png";
 import whatDrivesUs from "@/../public/assets/image/What Drives Us.png";
 import whoWeAre from "@/../public/assets/image/Who We Are.png";
+import kidden from "@/../public/assets/image/kidden.jpg";
+import Terry from "@/../public/assets/image/Terry.jpg";
 // make some chagnes
 export const IMAGE = {
   happyBanner,
@@ -40,6 +42,8 @@ export const IMAGE = {
   whatDrivesUs,
   howWeIgniteChange,
   students,
+  kidden,
+  Terry,
 };
 
 import archer from "@/../public/assets/icons/archar.svg";

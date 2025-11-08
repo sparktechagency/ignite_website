@@ -4,7 +4,7 @@ import React from 'react';
 function SocialIcons() {
     return (
         <div className="flex items-center justify-center gap-4">
-            <Link target='_blank' href="https://www.facebook.com/">
+            <Link target='_blank' href="https://www.facebook.com/profile.php?id=61576508477441">
                 <div className="hover:cursor-pointer">
                     <svg
                         width="28"
@@ -20,7 +20,7 @@ function SocialIcons() {
                     </svg>
                 </div>
             </Link>
-            <Link target='_blank' href="https://www.twitter.com/">
+            <Link target='_blank' href="https://x.com/bethespark25?s=21">
                 <div className="hover:cursor-pointer">
                     <svg
                         width="28"
@@ -40,7 +40,7 @@ function SocialIcons() {
                     </svg>
                 </div>
             </Link>
-            <Link target='_blank' href="https://www.linkedin.com/">
+            <Link target='_blank' href="https://www.linkedin.com/company/ignitefoundation-us/">
                 <div className="hover:cursor-pointer">
                     <svg
                         width="28"
@@ -56,7 +56,7 @@ function SocialIcons() {
                     </svg>
                 </div>
             </Link>
-            <Link target='_blank' href="https://www.youtube.com/">
+            <Link target='_blank' href="https://www.instagram.com/ignitefoundation_us?igsh=eTE1M3R6ZXA4YW0x&utm_source=qr">
                 <div className="hover:cursor-pointer">
                     <svg
                         width="28"

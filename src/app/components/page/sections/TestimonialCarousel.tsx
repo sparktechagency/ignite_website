@@ -16,24 +16,17 @@ interface Testimonial {
 const TESTIMONIALS: Testimonial[] = [
     {
         id: 1,
-        name: "Rolando Hintz",
-        date: "June 16-17, 2025",
-        image: IMAGE.slideImage1.src,
-        quote: "Ipsum vel nobis doloremque est aut non accusantium vero molestias. Et est minima dolorem eum modi atque sint nobis. Enim quod facere. Reiciendis necessitatibus ipsam non aspernatur voluptate id."
+        name: "Kate & Kaiden",
+        date: "November 6 , 2025",
+        image: IMAGE.kidden.src,
+        quote: `A financial aid scholarship from IGNITE Foundation has been such a huge help for our family. It has allowed us to keep our child training at a higher level, stay connected with a positive team environment, and continue growing in a sport they truly love - without the financial burden on our household. We're incredibly grateful for the support." Kate & Kaiden, Dallas TX`
     },
     {
         id: 2,
-        name: "Sarah Martinez",
-        date: "July 22-23, 2025",
-        image: IMAGE.slideImage2.src,
-        quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
-    },
-    {
-        id: 3,
-        name: "Sarah Martinez",
-        date: "July 22-23, 2025",
-        image: IMAGE.slideImage3.src,
-        quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+        name: "Terry Woodberry",
+        date: "November 6 , 2025",
+        image: IMAGE.Terry.src,
+        quote: `"The opportunity given by the IGNITE Foundation to talented players, players with big potential, is a blessing. Coming from a humble background, and knowing what it takes to make pro, IGNITE is doing a huge service for the these young soccer players by giving them the opportunity to train with the best coaches." Terry Woodberry, Dallas Legends Technical Director, Dallas TX`
     }
 ];
 
@@ -91,17 +84,16 @@ const TestimonialCarousel: React.FC = memo(() => {
 
     return (
         <div
-            className="w-full container mx-auto h-[calc(100vh-80px)] flex items-center justify-center md:h-[calc(100vh-64px)] bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden"
+            className="w-full container mx-auto my-4 flex items-center justify-center md:h-[calc(100vh-200px)] bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden"
             role="region"
             aria-label="Testimonials carousel"
         >
-            <div className="absolute hidden md:block bg-gradient-to-br from-[#BF0A30] via-[#BF0A30] to-[#003F91] top-[50%] translate-y-[-50%] left-0 w-[50%] p-4 h-[calc(100vh-150px)]">
+            <div className="absolute hidden md:block bg-gradient-to-br from-[#BF0A30] via-[#BF0A30] to-[#003F91] top-[50%] translate-y-[-50%] left-0 w-[50%] p-4 h-[600px]">
                 <div className="w-full h-full bg-white"></div>
             </div>
             <div className="relative bg-white overflow-hidden max-w-screen-xl h-fit z-10 flex items-center justify-center px-4 py-8">
                 <div className="w-full container mx-auto">
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-
                         {/* Left Column - Content */}
                         <motion.div
                             className="space-y-8 text-black"
@@ -133,8 +125,8 @@ const TestimonialCarousel: React.FC = memo(() => {
                                     exit="exit"
                                     className="space-y-6"
                                 >
-                                    <blockquote className="text-xl line-clamp-4 lg:text-2xl xl:text-3xl leading-relaxed lg:leading-relaxed font-light">
-                                        {currentTestimonial.quote}
+                                    <blockquote className="text-sm lg:text-lg xl:text-xl leading-relaxed lg:leading-relaxed font-light">
+                                        {currentTestimonial?.quote}
                                     </blockquote>
                                     <div className='flex items-center gap-2'>
                                         <div className='hidden md:flex items-center justify-center'>
@@ -148,7 +140,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                                 animate={{ x: 0, opacity: 1 }}
                                                 transition={{ delay: 0.3 }}
                                             >
-                                                {currentTestimonial.name}
+                                                {currentTestimonial?.name}
                                             </motion.h3>
 
                                             <motion.p
@@ -161,7 +153,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                                 <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
-                                                {currentTestimonial.date}
+                                                {currentTestimonial?.date}
                                             </motion.p>
                                         </div>
                                     </div>
@@ -219,8 +211,8 @@ const TestimonialCarousel: React.FC = memo(() => {
                                         className="relative w-64 z-[999] h-64 xl:w-80 xl:h-80 rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl"
                                     >
                                         <img
-                                            src={currentTestimonial.image}
-                                            alt={currentTestimonial.name}
+                                            src={currentTestimonial?.image}
+                                            alt={currentTestimonial?.name}
                                             className="w-full h-full object-cover"
                                             loading="lazy"
                                         />
