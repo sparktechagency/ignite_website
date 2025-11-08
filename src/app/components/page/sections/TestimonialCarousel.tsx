@@ -93,7 +93,7 @@ const TestimonialCarousel: React.FC = memo(() => {
             </div>
             <div className="relative bg-white overflow-hidden max-w-screen-xl h-fit z-10 flex items-center justify-center px-4 py-8">
                 <div className="w-full container mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                    <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
                         {/* Left Column - Content */}
                         <motion.div
                             className="space-y-8 text-black"
@@ -125,7 +125,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                     exit="exit"
                                     className="space-y-6"
                                 >
-                                    <blockquote className="text-sm lg:text-lg xl:text-xl leading-relaxed lg:leading-relaxed font-light">
+                                    <blockquote className="text-sm md:text-lg xl:text-xl leading-relaxed md:leading-relaxed font-light">
                                         {currentTestimonial?.quote}
                                     </blockquote>
                                     <div className='flex items-center gap-2'>
@@ -135,7 +135,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                         </div>
                                         <div className="space-y-2">
                                             <motion.h3
-                                                className="text-2xl lg:text-3xl line-clamp-1 font-semibold"
+                                                className="text-2xl md:text-3xl line-clamp-1 font-semibold"
                                                 initial={{ x: -20, opacity: 0 }}
                                                 animate={{ x: 0, opacity: 1 }}
                                                 transition={{ delay: 0.3 }}
@@ -144,13 +144,13 @@ const TestimonialCarousel: React.FC = memo(() => {
                                             </motion.h3>
 
                                             <motion.p
-                                                className="text-black/80 flex items-center gap-2 text-sm lg:text-base line-clamp-1"
+                                                className="text-black/80 flex items-center gap-2 text-sm md:text-base line-clamp-1"
                                                 initial={{ x: -20, opacity: 0 }}
                                                 animate={{ x: 0, opacity: 1 }}
                                                 transition={{ delay: 0.4 }}
                                             >
 
-                                                <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
                                                 {currentTestimonial?.date}
@@ -178,7 +178,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                     )}
                                 >
                                     <ChevronLeft className={cn(
-                                        "w-5 h-5 text-white lg:w-6 lg:h-6",
+                                        "w-5 h-5 text-white md:w-6 md:h-6",
                                         currentIndex > 0 && "text-[#BF0A30]"
                                     )} />
                                 </button>
@@ -188,14 +188,14 @@ const TestimonialCarousel: React.FC = memo(() => {
                                     aria-label="Next testimonial"
                                     className="bg-gradient-to-br from-[#BF0A30] to-[#003F91] disabled:opacity-50 disabled:cursor-not-allowed rounded-full p-4 text-black transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95"
                                 >
-                                    <ChevronRight className="w-5 h-5 text-white lg:w-6 lg:h-6" />
+                                    <ChevronRight className="w-5 h-5 text-white md:w-6 md:h-6" />
                                 </button>
                             </motion.div>
                         </motion.div>
 
                         {/* Right Column - Visual Element */}
                         <motion.div
-                            className="hidden lg:flex items-center justify-center"
+                            className="hidden md:flex items-center justify-center"
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.6, duration: 0.8 }}
