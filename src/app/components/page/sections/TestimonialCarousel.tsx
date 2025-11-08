@@ -17,14 +17,14 @@ const TESTIMONIALS: Testimonial[] = [
     {
         id: 1,
         name: "Kate & Kaiden",
-        date: "November 6 , 2025",
+        date: "November 2025",
         image: IMAGE.kidden.src,
         quote: `A financial aid scholarship from IGNITE Foundation has been such a huge help for our family. It has allowed us to keep our child training at a higher level, stay connected with a positive team environment, and continue growing in a sport they truly love - without the financial burden on our household. We're incredibly grateful for the support." Kate & Kaiden, Dallas TX`
     },
     {
         id: 2,
         name: "Terry Woodberry",
-        date: "November 6 , 2025",
+        date: "November 2025",
         image: IMAGE.Terry.src,
         quote: `"The opportunity given by the IGNITE Foundation to talented players, players with big potential, is a blessing. Coming from a humble background, and knowing what it takes to make pro, IGNITE is doing a huge service for the these young soccer players by giving them the opportunity to train with the best coaches." Terry Woodberry, Dallas Legends Technical Director, Dallas TX`
     }
