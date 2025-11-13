@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setChildInfo, type ChildInfo } from '../../../store/features/applyIgnite/applyIgniteSlice'
 import dayjs, { Dayjs } from 'dayjs'
 import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 export type ChildInformationHandle = { validate: () => Promise<any> }
 
@@ -64,6 +65,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
           <Col xs={24} md={12}>
             <Form.Item name="ChildsSport" label="Child's Sport" rules={[{ required: true }]}>
               <Select
+                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                 placeholder='Select Child’s Sport'
                 allowClear
                 size='large'
@@ -77,6 +79,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
           <Col xs={24} md={12}>
             <Form.Item name="ChildsGender" label="Child's Gender" rules={[{ required: true }]}>
               <Select
+              suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
                 placeholder='Select Gender'
                 allowClear
                 size='large'

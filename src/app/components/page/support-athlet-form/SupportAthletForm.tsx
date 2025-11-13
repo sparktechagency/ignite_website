@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { BsExclamationOctagon } from 'react-icons/bs'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 type FundOption = 'IGNITE_FUND' | 'IGNITE_A_CHILD'
 type AmountTier = 'Spark' | 'Flame' | 'Blaze' | 'Inferno' | 'Custom'
@@ -126,6 +127,7 @@ function SupportAthletForm() {
                     rules={[{ required: true, message: 'Please select a fund to support' }]}
                 >
                     <Select
+                        suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                         size='large'
                         placeholder="Select a Fund to Support"
                         options={[
@@ -141,6 +143,7 @@ function SupportAthletForm() {
                     rules={[{ required: true, message: 'Please select a donation amount' }]}
                 >
                     <Select
+                        suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                         size='large'
                         placeholder="Donation Amount"
                         options={amountOptions}
@@ -175,6 +178,7 @@ function SupportAthletForm() {
                     >
                         <Select
                             size='large'
+                            suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
                             placeholder="Donation Frequency"
                             options={[
                                 { value: 'One-time', label: 'One-time' },

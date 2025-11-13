@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setClubInfo, type ClubInfo } from '../../../store/features/applyClubSlice'
 import { SportType } from '../IGNITE-Component/ChildInformation'
 import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 export type ClubAcademyDetailsHandle = { validate: () => Promise<any> }
 
@@ -43,7 +44,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
             >
                 <Row gutter={16}>
                     <Col xs={24} md={24}>
-                        <Form.Item style={{fontFamily:"../../../../../public/assets/fonts/Syne-Bold.ttf"}} name="clubName" label="Academy or Club Name" rules={[{ required: true }]}>
+                        <Form.Item style={{ fontFamily: "../../../../../public/assets/fonts/Syne-Bold.ttf" }} name="clubName" label="Academy or Club Name" rules={[{ required: true }]}>
                             <Input placeholder='Enter your academy or club name' size="large" />
                         </Form.Item>
                     </Col>
@@ -52,7 +53,8 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
                     <Col xs={24} md={24} >
                         <Form.Item name="sportOffered" label="Sport Offered ( Multiple Choses )" rules={[{ required: true }]}>
                             <Select
-                            loading={isLoading}
+                                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
+                                loading={isLoading}
                                 mode="multiple"
                                 placeholder='Select Child’s Sport'
                                 allowClear

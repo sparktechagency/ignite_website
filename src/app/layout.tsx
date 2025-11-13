@@ -110,7 +110,15 @@ const themeConfig: ThemeConfig = {
       colorPrimaryHover: "rgb(0,0,0)"
     },
     Select: {
-      optionSelectedColor: "rgba(255,255,255,0.88)"
+      optionSelectedColor: "rgba(255,255,255,0.88)",
+      fontSizeLG: 16
+    },
+    Input: {
+      fontSizeLG: 20,
+    },
+    Form: {
+      labelFontSize: 18,
+      labelHeight: 32
     }
   },
 };

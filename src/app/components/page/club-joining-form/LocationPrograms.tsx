@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Form, Input, Row, Col, Divider, Button, Select } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setLocationAndPrograms, type LocationAndPrograms, type ClubAddress } from '../../../store/features/applyClubSlice'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 export type LocationProgramsHandle = { validate: () => Promise<any> }
 
@@ -107,6 +108,7 @@ const LocationPrograms = React.forwardRef<LocationProgramsHandle, {}>(function L
                     <Col xs={24} md={24}>
                         <Form.Item name="levelsOfCompetition" label="Levels of Competition (check all that apply)" rules={[{ required: true }]}>
                             <Select
+                                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                                 mode="multiple"
                                 placeholder='Select Levels of Competition'
                                 allowClear
