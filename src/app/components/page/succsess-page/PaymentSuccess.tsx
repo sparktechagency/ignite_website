@@ -11,7 +11,7 @@ export default function PaymentSuccess() {
     const router = useRouter()
 
     const message = (() => {
-        switch (paymentType) {
+        switch (paymentType?.split(",")[0]) {
             case 'club':
                 return {
                     icon: ICONS.success,
@@ -43,34 +43,34 @@ export default function PaymentSuccess() {
     })()
 
     return (
-            <SuccessLayout>
-                <div className="z-[777] bg-white p-3 rounded-md shadow inset-shadow-2xs border border-gray-300 relative max-w-screen-md mx-auto flex flex-col items-center justify-center gap-4 text-center px-4">
-                    <Image
-                        src={message.icon}
-                        alt="Payment success"
-                        width={100}
-                        height={100}
-                        className="w-20 h-20 mb-4"
-                    />
+        <SuccessLayout>
+            <div className="z-[777] bg-white p-3 rounded-md shadow inset-shadow-2xs border border-gray-300 relative max-w-screen-md mx-auto flex flex-col items-center justify-center gap-4 text-center px-4">
+                <Image
+                    src={message.icon}
+                    alt="Payment success"
+                    width={100}
+                    height={100}
+                    className="w-20 h-20 mb-4"
+                />
 
-                    <h1 className="text-3xl font-semibold text-gray-800">
-                        {message.title}
-                    </h1>
+                <h1 className="text-3xl font-semibold text-gray-800">
+                    {message.title}
+                </h1>
 
-                    <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-2xl">
-                        {message.subtitle}
-                    </p>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-2xl">
+                    {message.subtitle}
+                </p>
 
-                    <button
-                        onClick={() => router.push(message.redirect)}
-                        className={cn(
-                            'bg-gradient-to-r from-[#BF0A30] to-[#003F91] text-white px-8 py-3 rounded-lg text-lg mt-6 font-medium transition-all hover:scale-105 hover:shadow-lg'
-                        )}
-                    >
-                        {message.buttonLabel}
-                    </button>
-                </div>
-            </SuccessLayout>
+                <button
+                    onClick={() => router.push(message.redirect)}
+                    className={cn(
+                        'bg-gradient-to-r from-[#BF0A30] to-[#003F91] text-white px-8 py-3 rounded-lg text-lg mt-6 font-medium transition-all hover:scale-105 hover:shadow-lg'
+                    )}
+                >
+                    {message.buttonLabel}
+                </button>
+            </div>
+        </SuccessLayout>
     )
 }
 
