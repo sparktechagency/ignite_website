@@ -48,10 +48,10 @@ const IgniteApply: React.FC = () => {
     }
 
     const handleSubmit = async () => {
+        if (current === 0) await childRef.current?.validate()
+        if (current === 1) await parentRef.current?.validate()
+        if (current === 2) await aboutRef.current?.validate()
         try {
-            if (current === 0) await childRef.current?.validate()
-            if (current === 1) await parentRef.current?.validate()
-            if (current === 2) await aboutRef.current?.validate()
 
             const incomeRaw = applyIgnite?.parentDetails?.AnnualHouseholdIncome;
             const incomeParsed = typeof incomeRaw === 'string'

@@ -65,7 +65,7 @@ const ClubJoiningApply: React.FC = () => {
                 toast.error('Please select a quantity to proceed.')
                 setTimeout(() => {
                     router.push("/join-our-club")
-                }, 2000);
+                }, 1500);
                 return false
             }
 
