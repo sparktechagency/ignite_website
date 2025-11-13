@@ -23,7 +23,6 @@ const siteName = 'IGNITE Foundation';
 const siteDescription = 'Empowering young athletes through sports, education, and community development programs.';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ignitefoundation.us';
 
-// Generate metadata for the site
 export const metadata: Metadata = {
   title: {
     default: siteName,
@@ -109,6 +108,9 @@ const themeConfig: ThemeConfig = {
     Checkbox: {
       colorPrimary: "rgb(0,0,0)",
       colorPrimaryHover: "rgb(0,0,0)"
+    },
+    Select: {
+      optionSelectedColor: "rgba(255,255,255,0.88)"
     }
   },
 };
@@ -134,7 +136,7 @@ export default function RootLayout({
           <Toaster position="top-center" toastOptions={{ duration: 1500 }} />
           <Header />
           <ConfigProvider theme={themeConfig}>
-            <main className="min-h-screen">
+            <main>
               {children}
             </main>
           </ConfigProvider>

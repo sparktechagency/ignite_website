@@ -25,6 +25,7 @@ const ClubJoiningApply: React.FC = () => {
     const parentRef = useRef<LocationProgramsHandle>(null)
     const [clubCreate, { isLoading }] = useClubCreateMutation()
     const router = useRouter()
+
     useEffect(() => {
         const isClubInfoHave = Cookies.get('clubInfo')
         const { quantity } = JSON.parse(isClubInfoHave || '{}')
@@ -54,15 +55,18 @@ const ClubJoiningApply: React.FC = () => {
     }
 
     const handleSubmit = async () => {
+        if (current === 0) await childRef.current?.validate()
+        if (current === 1) await parentRef.current?.validate()
         try {
-            if (current === 0) await childRef.current?.validate()
-            if (current === 1) await parentRef.current?.validate()
-
             const clubInformationFormCookie = Cookies.get('clubInfo')
             const { quantity } = JSON.parse(clubInformationFormCookie || '{}')
 
             if (!quantity) {
-                return toast.error('Quantity is required')
+                toast.error('Please select a quantity to proceed.')
+                setTimeout(() => {
+                    router.push("/join-our-club")
+                }, 2000);
+                return false
             }
 
             const payload = {
@@ -100,6 +104,7 @@ const ClubJoiningApply: React.FC = () => {
                 }
             }
         } catch (error: any) {
+            console.log(error)
             toast.error(error instanceof Error ? error.message : 'Something went wrong')
         }
     }
@@ -192,7 +197,11 @@ const ClubJoiningApply: React.FC = () => {
                                 marginLeft: '10px',
                                 transition: 'all 0.3s ease',
                             }}
-                            onClick={() => handleSubmit()}>
+                            onClick={() => {
+                                if (current === 0) childRef.current?.validate()
+                                if (current === 1) parentRef.current?.validate()
+                                handleSubmit()
+                            }}>
                             Join Be The Spark Club
                         </Button>
                     )}

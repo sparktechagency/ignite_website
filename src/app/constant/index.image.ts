@@ -53,6 +53,8 @@ import imageFrame from "@/../public/assets/icons/ImageFrame.png";
 import magnifire from "@/../public/assets/icons/magnifire.svg";
 import roket from "@/../public/assets/icons/roket.svg";
 import stadium from "@/../public/assets/icons/stadium.svg";
+import success from "@/../public/assets/icons/success.png";
+import multiply from "@/../public/assets/icons/multiply.png";
 export const ICONS = {
   fire,
   archer,
@@ -61,4 +63,6 @@ export const ICONS = {
   stadium,
   roket,
   imageFrame,
+  success,
+  multiply
 };

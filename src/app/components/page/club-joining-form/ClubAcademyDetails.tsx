@@ -43,7 +43,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
             >
                 <Row gutter={16}>
                     <Col xs={24} md={24}>
-                        <Form.Item name="clubName" label="Academy or Club Name" rules={[{ required: true }]}>
+                        <Form.Item style={{fontFamily:"../../../../../public/assets/fonts/Syne-Bold.ttf"}} name="clubName" label="Academy or Club Name" rules={[{ required: true }]}>
                             <Input placeholder='Enter your academy or club name' size="large" />
                         </Form.Item>
                     </Col>

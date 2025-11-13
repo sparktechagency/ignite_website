@@ -40,6 +40,7 @@ function SupportAthletForm() {
 
     const fee = coverFee ? +(baseAmount * 0.03).toFixed(2) : 0
     const total = +(baseAmount + fee).toFixed(2)
+    const total_for_backend = baseAmount
 
     const showFrequency = fund === 'IGNITE_FUND'
     const showCustom = tier === 'Custom' && fund === 'IGNITE_FUND'
@@ -80,14 +81,15 @@ function SupportAthletForm() {
                 customAmount: values.customAmount ? Number(values.customAmount) : undefined,
                 frequency: showFrequency ? (values.frequency as Frequency) : undefined,
                 coverFee: !!values.coverFee,
-                total,
+                total_for_backend,
             }
             const finalPayload = {
-                amount: payload.total,
+                amount: payload.total_for_backend,
                 fundType: payload.fund,
                 ...payload.frequency !== undefined && { frequency: payload.frequency },
                 freeCovered: payload.coverFee
             }
+            console.log(finalPayload)
             const response = await createDonation(finalPayload).unwrap()
             if (!response?.success) throw new Error(response?.message)
             if (response?.success) {
@@ -114,7 +116,7 @@ function SupportAthletForm() {
                 form={form}
                 requiredMark={false}
                 layout='vertical'
-                initialValues={{ coverFee: true, fund: 'IGNITE_FUND', frequency: 'One Time' }}
+                initialValues={{ coverFee: true, fund: 'IGNITE_FUND', frequency: undefined }}
                 onValuesChange={onValuesChange}
                 onFinish={onFinish}
             >

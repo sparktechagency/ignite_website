@@ -125,7 +125,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                     exit="exit"
                                     className="space-y-6"
                                 >
-                                    <blockquote className="text-sm md:text-lg xl:text-xl leading-relaxed md:leading-relaxed font-light">
+                                    <blockquote className="text-sm md:text-lg xl:text-xl leading-relaxed md:leading-relaxed  font-light">
                                         {currentTestimonial?.quote}
                                     </blockquote>
                                     <div className='flex items-center gap-2'>
