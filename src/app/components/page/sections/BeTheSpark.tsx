@@ -21,7 +21,7 @@ function BeTheSpark() {
                 description={`Here's our story - a short film showing how IGNITE is working to remove the financial barriers that are keeping so many talented American youth athletes from achieving their athletic goals`}
                 icon={ICONS.fire} />
             <div className='h-auto shadow-lg max-w-screen-lg aspect-video mx-auto rounded-2xl overflow-hidden'>
-                <video src="/assets/video/kid_playing.mp4" controls autoPlay muted loop className='w-full h-full aspect-video object-cover'></video>
+                <video src="https://d1m86avknwgx1f.cloudfront.net/videos/Ignite+Video+(1).mp4" controls autoPlay muted loop className='w-full h-full  object-fill'></video>
             </div>
         </div>
     )
