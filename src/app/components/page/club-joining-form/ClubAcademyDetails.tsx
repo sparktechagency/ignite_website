@@ -8,6 +8,7 @@ import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 export type ClubAcademyDetailsHandle = { validate: () => Promise<any> }
+// export type ClubAcademyDetailsHandle = { validate: () => Promise<any> }
 
 const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(function ClubAcademyDetails(_, ref) {
     const dispatch = useAppDispatch()
