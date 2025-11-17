@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     domains: ["di0kc6glg2cji.cloudfront.net", "10.10.20.9", "placehold.co", "api.ignitefoundation"],
   },
   turbopack: {
-    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json','.ttf'],
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json','.ttf','.mp4'],
   },
 };
 
