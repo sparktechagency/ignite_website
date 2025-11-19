@@ -49,7 +49,7 @@ export default MeetOurTeam
 
 const TeamMember = ({ name, profile_image, position, data }: teamTypes) => {
     const [showModal, isShowModal] = useState(false)
-    const [record, setRecord] = useState<{ profile_image: string, name: string, position: string }>(null)
+    const [record, setRecord] = useState<any>({ profile_image: null })
     return (
         <>
             <div
