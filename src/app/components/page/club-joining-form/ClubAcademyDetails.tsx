@@ -14,7 +14,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
     const dispatch = useAppDispatch()
     const clubInfo = useAppSelector(s => s.applyClub.clubInfo)
     const [form] = Form.useForm<ClubInfo>()
-    const { data: categoryData, isLoading } = useGetCategoryQuery(undefined)
+    const { data: categoryData, isLoading } = useGetCategoryQuery({ limit: 999 })
 
     useEffect(() => {
         form.setFieldsValue(clubInfo as any)
@@ -54,7 +54,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
                     <Col xs={24} md={24} >
                         <Form.Item name="sportOffered" label="Sport Offered ( Multiple Choses )" rules={[{ required: true }]}>
                             <Select
-                                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
+                                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                                 loading={isLoading}
                                 mode="multiple"
                                 placeholder='Select Child’s Sport'

@@ -17,8 +17,8 @@ interface teamTypes {
 }
 
 function MeetOurTeam() {
-    const { data: teamData, isLoading } = useGetTeamQuery(undefined)
-    console.log(teamData)
+    const { data: teamData, isLoading } = useGetTeamQuery({ limit: 999 })
+
     if (isLoading) {
         return (
             <div className="grid max-w-7xl px-2 mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -23,7 +23,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
   const dispatch = useAppDispatch()
   const childInfo = useAppSelector(s => s.applyIgnite.childInfo)
   const [form] = Form.useForm<any>()
-  const { data: categoryData } = useGetCategoryQuery(undefined)
+  const { data: categoryData } = useGetCategoryQuery({ limit: 999 })
 
   useEffect(() => {
     const mapped = {
@@ -79,7 +79,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
           <Col xs={24} md={12}>
             <Form.Item name="ChildsGender" label="Child's Gender" rules={[{ required: true }]}>
               <Select
-              suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
+                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                 placeholder='Select Gender'
                 allowClear
                 size='large'

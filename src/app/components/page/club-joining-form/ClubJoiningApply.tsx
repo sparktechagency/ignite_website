@@ -104,8 +104,7 @@ const ClubJoiningApply: React.FC = () => {
                 }
             }
         } catch (error: any) {
-            console.log(error)
-            toast.error(error instanceof Error ? error.message : 'Something went wrong')
+            toast.error(error instanceof Error ? error.message : 'Something went wrong while creating club')
         }
     }
 

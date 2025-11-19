@@ -23,7 +23,7 @@ export interface ParentDetails {
 export interface AboutChild {
     WhyShouldWeIGNITEYourChild: string | null
     VideosOrSocialMediaShowcase: string | null
-    ShowcasingOptIn: boolean
+    isShowCase: boolean
 }
 
 export interface ApplyIgniteState {
@@ -56,7 +56,7 @@ const initialState: ApplyIgniteState = {
     aboutChild: {
         WhyShouldWeIGNITEYourChild: null,
         VideosOrSocialMediaShowcase: null,
-        ShowcasingOptIn: false,
+        isShowCase: false,
     },
 }
 
@@ -71,6 +71,7 @@ const applyIgniteSlice = createSlice({
             state.parentDetails = { ...state.parentDetails, ...action.payload }
         },
         setAboutChild(state, action: PayloadAction<Partial<AboutChild>>) {
+            console.log(state)
             state.aboutChild = { ...state.aboutChild, ...action.payload }
         },
         setStep(state, action: PayloadAction<number>) {
@@ -105,7 +106,7 @@ const applyIgniteSlice = createSlice({
             state.aboutChild = {
                 WhyShouldWeIGNITEYourChild: '',
                 VideosOrSocialMediaShowcase: '',
-                ShowcasingOptIn: false,
+                isShowCase: false,
             }
         },
     },

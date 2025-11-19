@@ -1,3 +1,4 @@
+// export const url: string = "http://10.10.20.9:5000"
 export const url: string = "https://api.ignitefoundation.us"
 
 export const imageUrl = ({ image }: { image: string }) => {

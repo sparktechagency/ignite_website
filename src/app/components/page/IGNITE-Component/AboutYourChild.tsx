@@ -44,14 +44,14 @@ const AboutYourChild = React.forwardRef<AboutYourChildHandle, {}>(function About
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="VideosOrSocialMediaShowcase" label="Videos or Social Media Showcase (Optional)">
+            <Form.Item name="VideosOrSocialMediaShowcase" label={`Videos or Social Media Showcase ${aboutChild.isShowCase ? '(Optional)' : ''}`}>
               <Input size="large" placeholder="Provide a link to highlight reels or publicly shared videos of your child" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="ShowcasingOptIn" label={
+            <Form.Item name="isShowCase" label={
               <div className='flex flex-col gap-1'>
                 <span>Showcasing Option</span>
                 <small className='text-gray-500'>Allow IGNITE to share your child's highlight reels with prospective clubs & academies.</small>
@@ -72,7 +72,11 @@ const AboutYourChild = React.forwardRef<AboutYourChildHandle, {}>(function About
                     { label: 'Yes', value: true },
                     { label: 'No', value: false },
                   ]}
-                  defaultValue={aboutChild.ShowcasingOptIn}
+                  defaultValue={aboutChild.isShowCase}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    form.setFieldsValue({ isShowCase: value });
+                  }}
                   optionType="button"
                   buttonStyle="solid"
                 />

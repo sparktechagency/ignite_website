@@ -141,7 +141,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <ReduxProvider>
-          <Toaster position="top-center" toastOptions={{ duration: 1500 }} />
+          <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
           <Header />
           <ConfigProvider theme={themeConfig}>
             <main>

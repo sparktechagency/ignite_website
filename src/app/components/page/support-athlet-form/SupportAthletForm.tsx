@@ -90,7 +90,6 @@ function SupportAthletForm() {
                 ...payload.frequency !== undefined && { frequency: payload.frequency },
                 freeCovered: payload.coverFee
             }
-            console.log(finalPayload)
             const response = await createDonation(finalPayload).unwrap()
             if (!response?.success) throw new Error(response?.message)
             if (response?.success) {
