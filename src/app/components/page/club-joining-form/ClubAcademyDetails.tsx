@@ -14,7 +14,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
     const dispatch = useAppDispatch()
     const clubInfo = useAppSelector(s => s.applyClub.clubInfo)
     const [form] = Form.useForm<ClubInfo>()
-    const { data: categoryData, isLoading } = useGetCategoryQuery({ limit: 999 })
+    const { data: categoryData, isLoading } = useGetCategoryQuery({ limit: 999, sort: 'name' })
 
     useEffect(() => {
         form.setFieldsValue(clubInfo as any)

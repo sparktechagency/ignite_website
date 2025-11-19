@@ -23,7 +23,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
   const dispatch = useAppDispatch()
   const childInfo = useAppSelector(s => s.applyIgnite.childInfo)
   const [form] = Form.useForm<any>()
-  const { data: categoryData } = useGetCategoryQuery({ limit: 999 })
+  const { data: categoryData } = useGetCategoryQuery({ limit: 999, sort: 'name' })
 
   useEffect(() => {
     const mapped = {
