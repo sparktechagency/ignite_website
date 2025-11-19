@@ -86,26 +86,26 @@ const applyIgniteSlice = createSlice({
         reset(state) {
             state.step = 0
             state.childInfo = {
-                ChildsSport: '',
-                ChildsFirstName: '',
-                ChildsLastName: '',
+                ChildsSport: null,
+                ChildsFirstName: null,
+                ChildsLastName: null,
                 ChildsDateOfBirth: null,
-                ChildsGender: '',
+                ChildsGender: null,
             }
             state.parentDetails = {
-                ParentFirstName: '',
-                ParentLastName: '',
-                ParentEmail: '',
-                ParentPhone: '',
-                ParentStreetAddress: '',
-                ParentCity: '',
-                ParentState: '',
-                ParentZipCode: '',
-                AnnualHouseholdIncome: '',
+                ParentFirstName: null,
+                ParentLastName: null,
+                ParentEmail: null,
+                ParentPhone: null,
+                ParentStreetAddress: null,
+                ParentCity: null,
+                ParentState: null,
+                ParentZipCode: null,
+                AnnualHouseholdIncome: null,
             }
             state.aboutChild = {
-                WhyShouldWeIGNITEYourChild: '',
-                VideosOrSocialMediaShowcase: '',
+                WhyShouldWeIGNITEYourChild: null,
+                VideosOrSocialMediaShowcase: null,
                 isShowCase: false,
             }
         },

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { Form, Input, Select, Row, Col, Divider } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { setClubInfo, type ClubInfo } from '../../../store/features/applyClubSlice'
+import { reset, setClubInfo, type ClubInfo } from '../../../store/features/applyClubSlice'
 import { SportType } from '../IGNITE-Component/ChildInformation'
 import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
@@ -23,6 +23,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
     React.useImperativeHandle(ref, () => ({
         validate: () => form.validateFields(),
     }), [form])
+
 
     return (
         <>

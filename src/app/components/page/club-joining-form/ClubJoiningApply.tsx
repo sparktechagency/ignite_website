@@ -107,7 +107,9 @@ const ClubJoiningApply: React.FC = () => {
             toast.error(error instanceof Error ? error.message : 'Something went wrong while creating club')
         }
     }
-
+    useEffect(() => {
+        dispatch(reset())
+    }, [])
 
     return (
         <div className='container mx-auto pb-16'>

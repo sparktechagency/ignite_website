@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, message } from 'antd';
 import ChildInformation, { ChildInformationHandle } from './ChildInformation';
 import ParentDetails, { ParentDetailsHandle } from './ParentDetails';
@@ -86,7 +86,7 @@ const IgniteApply: React.FC = () => {
                 childStory: applyIgnite?.aboutChild?.WhyShouldWeIGNITEYourChild,
                 isShowCase: applyIgnite?.aboutChild?.isShowCase,
             };
-            
+
             const data = Object.keys(payload).reduce((acc, key) => {
                 const value = (payload as any)[key];
                 if (value !== undefined && value !== null && value !== '') {
@@ -106,7 +106,9 @@ const IgniteApply: React.FC = () => {
             toast.error(error?.error?.message || error?.data?.message || error?.message || 'Something went wrong while applying for IGNITE My Child')
         }
     }
-
+    useEffect(() => {
+        dispatch(reset())
+    }, [])
     return (
         <div className='container mx-auto pb-16'>
             <div
@@ -118,6 +120,9 @@ const IgniteApply: React.FC = () => {
                     <Button onClick={() => {
                         setIsSubmitted(false)
                         dispatch(reset())
+                        if (window !== undefined) {
+                            window.location.reload()
+                        }
                     }}>Ok</Button>
                 </div>
             }
@@ -130,6 +135,9 @@ const IgniteApply: React.FC = () => {
                     onClick={() => {
                         setIsSubmitted(false)
                         dispatch(reset())
+                        if (window !== undefined) {
+                            window.location.reload()
+                        }
                     }}
                     className="fixed inset-0 bg-black/50 z-777"
                 />

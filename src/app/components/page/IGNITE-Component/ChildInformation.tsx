@@ -36,7 +36,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
   React.useImperativeHandle(ref, () => ({
     validate: () => form.validateFields(),
   }), [form])
-
+  
   return (
     <>
       <div className='mb-4'>
@@ -103,7 +103,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
         <Row gutter={16}>
           <Col xs={24} md={24}>
             <Form.Item style={{ width: '100%' }} name="ChildsDateOfBirth" label="Date of Birth (YYYY-MM-DD)" rules={[{ required: true }]}>
-              <DatePicker style={{ width: '100%' }} size="large" />
+              <DatePicker  style={{ width: '100%' }} size="large" />
             </Form.Item>
           </Col>
         </Row>
