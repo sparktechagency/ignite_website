@@ -95,7 +95,7 @@ on:
       - "main"
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -109,15 +109,11 @@ jobs:
         with:
           node-version: "20.15"
 
-      # 3️⃣ Install dependencies
+      # 3️⃣ Install dependencies locally (optional, for caching)
       - name: Install Dependencies
         run: npm install --frozen-lockfile
 
-      # 4️⃣ Build Next.js Project
-      - name: Build Next.js Project
-        run: npm run build
-
-      # 5️⃣ Set up SSH to EC2
+      # 4️⃣ Set up SSH to EC2
       - name: Set up SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
@@ -127,38 +123,42 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy Full App and Restart on EC2
-      - name: Deploy to EC2
+      # 5️⃣ Upload project to EC2 (exclude node_modules and .git)
+      - name: Upload Project to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+        run: |
+          rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
+
+      # 6️⃣ Deploy and build on EC2
+      - name: Build and Start on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
         run: |
-          # Upload full project (exclude node_modules and .git)
-          rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
-
-          # Run remote commands
           ssh $EC2_USER@$EC2_HOST << 'EOF'
             cd ~/applications/website
 
-            # Write environment variables to .env
+            # 1️⃣ Write .env file from JSON secret
             echo '$ENV_VARS_JSON' | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > .env
 
-            # Install dependencies
+            # 2️⃣ Install dependencies
             npm install
 
-            # Build the app
+            # 3️⃣ Build the Next.js project
             npm run build
 
-            # Install PM2 if not installed
+            # 4️⃣ Install PM2 if not installed
             if ! command -v pm2 &> /dev/null; then
               npm install -g pm2
             fi
 
-            # Restart the app with PM2
+            # 5️⃣ Restart the app with PM2
             pm2 delete website || true
             pm2 start "npm start" --name website
 
-            # Restart nginx
+            # 6️⃣ Restart Nginx
             sudo systemctl restart nginx
           EOF
