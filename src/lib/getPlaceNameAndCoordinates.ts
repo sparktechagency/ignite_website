@@ -34,8 +34,8 @@ export async function getPlaceNameAndCoordinates(query: string) {
 
     return {
       name: place.displayName?.text ?? "",
-      latitude: place.location?.latitude ?? null,
       longitude: place.location?.longitude ?? null,
+      latitude: place.location?.latitude ?? null,
     };
 
   } catch (err) {

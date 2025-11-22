@@ -17,7 +17,7 @@ export interface ParentDetails {
         type: "Point",
         coordinates: number[]
     },
-    addressName: string | null,
+    guardianAddress: string | null,
     AnnualHouseholdIncome: number | string | null
 }
 
@@ -52,7 +52,7 @@ const initialState: ApplyIgniteState = {
             type: "Point",
             coordinates: [0, 0]
         },
-        addressName: null,
+        guardianAddress: null,
         AnnualHouseholdIncome: null,
     },
     aboutChild: {
@@ -103,7 +103,7 @@ const applyIgniteSlice = createSlice({
                     type: "Point",
                     coordinates: [0, 0]
                 },
-                addressName: null,
+                guardianAddress: null,
                 AnnualHouseholdIncome: null,
             }
             state.aboutChild = {

@@ -31,7 +31,7 @@ const PlaceSearch = () => {
 
         dispatch(
             setParentDetails({
-                addressName: place.name,
+                guardianAddress: place.name,
                 location: {
                     type: "Point",
                     coordinates: [place.longitude, place.latitude]
@@ -46,7 +46,7 @@ const PlaceSearch = () => {
             <Select
                 size="large"
                 showSearch
-                value={parentDetails.addressName || undefined}
+                value={parentDetails.guardianAddress || undefined}
                 placeholder="Search a place"
                 style={{ width: "100%" }}
                 onSearch={handleSearch}

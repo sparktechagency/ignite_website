@@ -79,6 +79,7 @@ const IgniteApply: React.FC = () => {
                 guardianEmail: applyIgnite?.parentDetails?.ParentEmail,
                 annualHouseHoldIncome: incomeParsed,
                 location: applyIgnite?.parentDetails?.location,
+                guardianAddress: applyIgnite?.parentDetails?.guardianAddress,
                 showcaseVideoLink: applyIgnite?.aboutChild?.VideosOrSocialMediaShowcase,
                 childStory: applyIgnite?.aboutChild?.WhyShouldWeIGNITEYourChild,
                 isShowCase: applyIgnite?.aboutChild?.isShowCase,
