@@ -17,7 +17,6 @@ function ContactForm() {
                 message: values?.description
             }
             const response = await submitContact(data).unwrap()
-            console.log(response)
             if (!response?.success) {
                 throw new Error(response?.message || '')
             }

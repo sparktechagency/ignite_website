@@ -20,7 +20,6 @@ export async function getPlaceNameAndCoordinates(query: string) {
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.log("API Error:", errorText);
       throw new Error("Failed to fetch");
     }
 

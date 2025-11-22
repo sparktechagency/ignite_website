@@ -73,7 +73,6 @@ const applyIgniteSlice = createSlice({
             state.parentDetails = { ...state.parentDetails, ...action.payload }
         },
         setAboutChild(state, action: PayloadAction<Partial<AboutChild>>) {
-            console.log(state)
             state.aboutChild = { ...state.aboutChild, ...action.payload }
         },
         setStep(state, action: PayloadAction<number>) {
