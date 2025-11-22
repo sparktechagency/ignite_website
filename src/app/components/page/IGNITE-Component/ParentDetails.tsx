@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect } from 'react'
-import { Form, Input, Row, Col, Divider } from 'antd'
+import { Form, Input, Row, Col, Divider, Select } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setParentDetails, type ParentDetails as ParentDetailsType } from '../../../store/features/applyIgnite/applyIgniteSlice'
 import { FaInfoCircle } from 'react-icons/fa'
+import PlaceSearch from '../../common/PlaceSearch'
 
 export type ParentDetailsHandle = { validate: () => Promise<any> }
 
@@ -59,22 +60,11 @@ const ParentDetails = React.forwardRef<ParentDetailsHandle, {}>(function ParentD
           </Col>
         </Row>
         <Row gutter={24}>
-          <Col xs={24} md={8}>
-            <Form.Item name="ParentStreetAddress" label="Street Address" rules={[{ required: true }]}>
-              <Input placeholder='Enter your street address' size="large" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item name="ParentCity" label="City / State" rules={[{ required: true }]}>
-              <Input placeholder='Enter your City / State' size="large" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item name="ParentZipCode" label="Zip/Postal Code" rules={[{ required: true }]}>
-              <Input placeholder='Enter your Zip/Postal Code' size="large" />
-            </Form.Item>
+          <Col xs={24} md={24}>
+            <PlaceSearch />
           </Col>
         </Row>
+        <Divider />
         <Row gutter={24}>
           <Col xs={24} md={24}>
             <Form.Item name="AnnualHouseholdIncome" label="Annual Household Income (Gross amount, before taxes & deductions)" rules={[{ required: true }]}>

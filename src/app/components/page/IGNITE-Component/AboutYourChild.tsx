@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Row, Col, Switch, Radio, ConfigProvider } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { setAboutChild, type AboutChild as AboutChildType } from '../../../store/features/applyIgnite/applyIgniteSlice'
@@ -10,6 +10,7 @@ const AboutYourChild = React.forwardRef<AboutYourChildHandle, {}>(function About
   const dispatch = useAppDispatch()
   const aboutChild = useAppSelector(s => s.applyIgnite.aboutChild)
   const [form] = Form.useForm<AboutChildType>()
+  const [isShow, setIsShow] = useState(false)
 
   useEffect(() => {
     form.setFieldsValue(aboutChild)
@@ -44,14 +45,14 @@ const AboutYourChild = React.forwardRef<AboutYourChildHandle, {}>(function About
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="VideosOrSocialMediaShowcase" label="Videos or Social Media Showcase (Optional)">
+            <Form.Item rules={[{ required: isShow }]} name="VideosOrSocialMediaShowcase" label={`Videos or Social Media Showcase`}>
               <Input size="large" placeholder="Provide a link to highlight reels or publicly shared videos of your child" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="ShowcasingOptIn" label={
+            <Form.Item name="isShowCase" label={
               <div className='flex flex-col gap-1'>
                 <span>Showcasing Option</span>
                 <small className='text-gray-500'>Allow IGNITE to share your child's highlight reels with prospective clubs & academies.</small>
@@ -72,7 +73,12 @@ const AboutYourChild = React.forwardRef<AboutYourChildHandle, {}>(function About
                     { label: 'Yes', value: true },
                     { label: 'No', value: false },
                   ]}
-                  defaultValue={aboutChild.ShowcasingOptIn}
+                  defaultValue={aboutChild.isShowCase}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setIsShow(value)
+                    form.setFieldsValue({ isShowCase: value });
+                  }}
                   optionType="button"
                   buttonStyle="solid"
                 />

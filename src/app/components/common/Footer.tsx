@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { ICONS, IMAGE } from '@/app/constant/index.image';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 const Footer = () => {
     const currentYear = new Date().getFullYear();
-
-
     const footerLinks = {
         resources: [
             { label: 'About Us', href: '/about-us' },
@@ -23,12 +23,14 @@ const Footer = () => {
             { label: 'Terms & Conditions', href: '/terms' }
         ],
         social: [
-            { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-            { icon: FaXTwitter, href: 'https://twitter.com', label: 'Twitter' },
-            { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-            { icon: FaInstagram, href: 'https://instagram.com', label: 'Instagram' },
+            { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61576508477441', label: 'Facebook' },
+            { icon: FaXTwitter, href: 'https://x.com/bethespark25?s=21', label: 'Twitter' },
+            { icon: Linkedin, href: 'https://www.linkedin.com/company/ignitefoundation-us', label: 'LinkedIn' },
+            { icon: FaInstagram, href: 'https://www.instagram.com/ignitefoundation_us?igsh=eTE1M3R6ZXA4YW0x&utm_source=qr', label: 'Instagram' },
         ],
     };
+    const path = usePathname()
+
     return (
         <footer
             style={{
@@ -37,7 +39,7 @@ const Footer = () => {
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
             }}
-            className="bg-[#0a1f44] text-white mt-12" role="contentinfo">
+            className={cn("bg-[#0a1f44] text-white mt-12", path === "/success" && "hidden mt-0")} role="contentinfo">
             <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
                 <div className="grid grid-cols-1 gap-8  lg:grid-cols-4">
                     {/* Brand Section */}

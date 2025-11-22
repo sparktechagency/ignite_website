@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { BsExclamationOctagon } from 'react-icons/bs'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 type FundOption = 'IGNITE_FUND' | 'IGNITE_A_CHILD'
 type AmountTier = 'Spark' | 'Flame' | 'Blaze' | 'Inferno' | 'Custom'
@@ -17,7 +18,7 @@ const AMOUNT_MAP: Record<Exclude<AmountTier, 'Custom'>, number> = {
 }
 
 function formatCurrency(n: number) {
-    return `$${n.toFixed(2)}`
+    return `$ ${n.toFixed(2)}`
 }
 
 function SupportAthletForm() {
@@ -40,6 +41,7 @@ function SupportAthletForm() {
 
     const fee = coverFee ? +(baseAmount * 0.03).toFixed(2) : 0
     const total = +(baseAmount + fee).toFixed(2)
+    const total_for_backend = baseAmount
 
     const showFrequency = fund === 'IGNITE_FUND'
     const showCustom = tier === 'Custom' && fund === 'IGNITE_FUND'
@@ -80,10 +82,10 @@ function SupportAthletForm() {
                 customAmount: values.customAmount ? Number(values.customAmount) : undefined,
                 frequency: showFrequency ? (values.frequency as Frequency) : undefined,
                 coverFee: !!values.coverFee,
-                total,
+                total_for_backend,
             }
             const finalPayload = {
-                amount: payload.total,
+                amount: payload.total_for_backend,
                 fundType: payload.fund,
                 ...payload.frequency !== undefined && { frequency: payload.frequency },
                 freeCovered: payload.coverFee
@@ -114,7 +116,7 @@ function SupportAthletForm() {
                 form={form}
                 requiredMark={false}
                 layout='vertical'
-                initialValues={{ coverFee: true, fund: 'IGNITE_FUND', frequency: 'One Time' }}
+                initialValues={{ coverFee: true, fund: 'IGNITE_FUND', frequency: undefined }}
                 onValuesChange={onValuesChange}
                 onFinish={onFinish}
             >
@@ -124,6 +126,7 @@ function SupportAthletForm() {
                     rules={[{ required: true, message: 'Please select a fund to support' }]}
                 >
                     <Select
+                        suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                         size='large'
                         placeholder="Select a Fund to Support"
                         options={[
@@ -139,6 +142,7 @@ function SupportAthletForm() {
                     rules={[{ required: true, message: 'Please select a donation amount' }]}
                 >
                     <Select
+                        suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                         size='large'
                         placeholder="Donation Amount"
                         options={amountOptions}
@@ -173,6 +177,7 @@ function SupportAthletForm() {
                     >
                         <Select
                             size='large'
+                            suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
                             placeholder="Donation Frequency"
                             options={[
                                 { value: 'One-time', label: 'One-time' },

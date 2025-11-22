@@ -33,10 +33,10 @@ function Page() {
 
                         <div>
                             <h3 className="text-xl sm:text-2xl font-semibold text-[#003F91]">
-                                Launch Price: ${clubJoinFee?.data?.fee || 0}
+                                {!clubJoinFee?.data?.isDiscountActive ? "Price" : "Launch Price"}: ${clubJoinFee?.data?.isDiscountActive ? clubJoinFee?.data?.fee - clubJoinFee?.data?.discountAmount || 0 : clubJoinFee?.data?.fee}
                             </h3>
                             {clubJoinFee?.data?.isDiscountActive && <p className="text-gray-500 line-through text-sm">
-                                Original Price: ${clubJoinFee?.data?.fee + clubJoinFee?.data?.discountAmount || 0}/year
+                                Original Price: ${clubJoinFee?.data?.fee || 0}/year
                             </p>}
                         </div>
 

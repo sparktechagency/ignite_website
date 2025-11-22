@@ -72,23 +72,23 @@ const applyClubSlice = createSlice({
         reset(state) {
             state.step = 0
             state.clubInfo = {
-                clubName: '',
-                sportOffered: [],
-                websiteURL: '',
-                primaryContactName: '',
-                primaryContactEmail: '',
-                primaryContactPhone: '',
+                clubName: null,
+                sportOffered: null,
+                websiteURL: null,
+                primaryContactName: null,
+                primaryContactEmail: null,
+                primaryContactPhone: null,
             }
             state.locationAndPrograms = {
                 clubAddress: [
                     {
-                        streetAddress: '',
-                        city: '',
-                        state: '',
-                        zipCode: '',
+                        streetAddress: null,
+                        city: null,
+                        state: null,
+                        zipCode: null,
                     }
                 ],
-                levelsOfCompetition: [],
+                levelsOfCompetition: null,
             }
         },
     },

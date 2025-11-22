@@ -224,8 +224,8 @@ function Header() {
                                                 </button>
                                             </motion.div>
                                         ))}
-                                        <Link href="/join-our-club">
-                                            <h1 className="text-base bg-gradient-to-r from-[#BF0A30] to-[#003F91] text-white px-3 py-1 inset-0 border border-gray-200 cursor-pointer bg-white w-fit rounded-full font-bold">Join the Be The Spark Club</h1>
+                                        <Link  href="/join-our-club">
+                                            <h1 onClick={() => setIsMobileMenuOpen(false)} className="text-base bg-gradient-to-r from-[#BF0A30] to-[#003F91] text-white px-3 py-1 inset-0 border border-gray-200 cursor-pointer bg-white w-fit rounded-full font-bold">Join the Be The Spark Club</h1>
                                         </Link>
                                     </div>
                                 </motion.nav>

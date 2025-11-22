@@ -2,17 +2,19 @@
 import React, { useEffect } from 'react'
 import { Form, Input, Select, Row, Col, Divider } from 'antd'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { setClubInfo, type ClubInfo } from '../../../store/features/applyClubSlice'
+import { reset, setClubInfo, type ClubInfo } from '../../../store/features/applyClubSlice'
 import { SportType } from '../IGNITE-Component/ChildInformation'
 import { useGetCategoryQuery } from '@/app/store/service/categoryApis'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 export type ClubAcademyDetailsHandle = { validate: () => Promise<any> }
+// export type ClubAcademyDetailsHandle = { validate: () => Promise<any> }
 
 const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(function ClubAcademyDetails(_, ref) {
     const dispatch = useAppDispatch()
     const clubInfo = useAppSelector(s => s.applyClub.clubInfo)
     const [form] = Form.useForm<ClubInfo>()
-    const { data: categoryData, isLoading } = useGetCategoryQuery(undefined)
+    const { data: categoryData, isLoading } = useGetCategoryQuery({ limit: 999, sort: 'name' })
 
     useEffect(() => {
         form.setFieldsValue(clubInfo as any)
@@ -21,6 +23,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
     React.useImperativeHandle(ref, () => ({
         validate: () => form.validateFields(),
     }), [form])
+
 
     return (
         <>
@@ -43,16 +46,17 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
             >
                 <Row gutter={16}>
                     <Col xs={24} md={24}>
-                        <Form.Item name="clubName" label="Academy or Club Name" rules={[{ required: true }]}>
+                        <Form.Item style={{ fontFamily: "../../../../../public/assets/fonts/Syne-Bold.ttf" }} name="clubName" label="Academy or Club Name" rules={[{ required: true }]}>
                             <Input placeholder='Enter your academy or club name' size="large" />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} md={24} >
-                        <Form.Item name="sportOffered" label="Sport Offered ( Multiple Choses )" rules={[{ required: true }]}>
+                        <Form.Item name="sportOffered" label="Sport Offered (Check all that apply)" rules={[{ required: true }]}>
                             <Select
-                            loading={isLoading}
+                                suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
+                                loading={isLoading}
                                 mode="multiple"
                                 placeholder='Select Child’s Sport'
                                 allowClear

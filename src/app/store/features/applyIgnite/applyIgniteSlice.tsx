@@ -13,17 +13,18 @@ export interface ParentDetails {
     ParentLastName: string | null
     ParentEmail: string | null
     ParentPhone: string | null
-    ParentStreetAddress: string | null
-    ParentCity: string | null
-    ParentState: string | null
-    ParentZipCode: string | null
+    location: {
+        type: "Point",
+        coordinates: number[]
+    },
+    guardianAddress: string | null,
     AnnualHouseholdIncome: number | string | null
 }
 
 export interface AboutChild {
     WhyShouldWeIGNITEYourChild: string | null
     VideosOrSocialMediaShowcase: string | null
-    ShowcasingOptIn: boolean
+    isShowCase: boolean
 }
 
 export interface ApplyIgniteState {
@@ -47,16 +48,17 @@ const initialState: ApplyIgniteState = {
         ParentLastName: null,
         ParentEmail: null,
         ParentPhone: null,
-        ParentStreetAddress: null,
-        ParentCity: null,
-        ParentState: null,
-        ParentZipCode: null,
+        location: {
+            type: "Point",
+            coordinates: [0, 0]
+        },
+        guardianAddress: null,
         AnnualHouseholdIncome: null,
     },
     aboutChild: {
         WhyShouldWeIGNITEYourChild: null,
         VideosOrSocialMediaShowcase: null,
-        ShowcasingOptIn: false,
+        isShowCase: false,
     },
 }
 
@@ -85,27 +87,28 @@ const applyIgniteSlice = createSlice({
         reset(state) {
             state.step = 0
             state.childInfo = {
-                ChildsSport: '',
-                ChildsFirstName: '',
-                ChildsLastName: '',
+                ChildsSport: null,
+                ChildsFirstName: null,
+                ChildsLastName: null,
                 ChildsDateOfBirth: null,
-                ChildsGender: '',
+                ChildsGender: null,
             }
             state.parentDetails = {
-                ParentFirstName: '',
-                ParentLastName: '',
-                ParentEmail: '',
-                ParentPhone: '',
-                ParentStreetAddress: '',
-                ParentCity: '',
-                ParentState: '',
-                ParentZipCode: '',
-                AnnualHouseholdIncome: '',
+                ParentFirstName: null,
+                ParentLastName: null,
+                ParentEmail: null,
+                ParentPhone: null,
+                location: {
+                    type: "Point",
+                    coordinates: [0, 0]
+                },
+                guardianAddress: null,
+                AnnualHouseholdIncome: null,
             }
             state.aboutChild = {
-                WhyShouldWeIGNITEYourChild: '',
-                VideosOrSocialMediaShowcase: '',
-                ShowcasingOptIn: false,
+                WhyShouldWeIGNITEYourChild: null,
+                VideosOrSocialMediaShowcase: null,
+                isShowCase: false,
             }
         },
     },
