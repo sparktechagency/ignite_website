@@ -24,7 +24,7 @@ const IgniteApply: React.FC = () => {
     const aboutRef = useRef<AboutYourChildHandle>(null)
     const [createNomination, { isLoading }] = useCreateNominationMutation()
     const [isSubmitted, setIsSubmitted] = useState(false)
-
+    console.log(applyIgnite?.parentDetails?.location)
     const renderStep = () => {
         switch (current) {
             case 0:
@@ -77,11 +77,8 @@ const IgniteApply: React.FC = () => {
                 guardianFirstName: applyIgnite?.parentDetails?.ParentFirstName,
                 guardianLastName: applyIgnite?.parentDetails?.ParentLastName,
                 guardianEmail: applyIgnite?.parentDetails?.ParentEmail,
-                guardianStreetAddress: applyIgnite?.parentDetails?.ParentStreetAddress,
-                guardianCityS: applyIgnite?.parentDetails?.ParentCity,
-                guardianZipCode: applyIgnite?.parentDetails?.ParentZipCode,
-                guardianState: applyIgnite?.parentDetails?.ParentCity,
                 annualHouseHoldIncome: incomeParsed,
+                location: applyIgnite?.parentDetails?.location,
                 showcaseVideoLink: applyIgnite?.aboutChild?.VideosOrSocialMediaShowcase,
                 childStory: applyIgnite?.aboutChild?.WhyShouldWeIGNITEYourChild,
                 isShowCase: applyIgnite?.aboutChild?.isShowCase,

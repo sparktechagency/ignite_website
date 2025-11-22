@@ -53,7 +53,7 @@ const ClubAcademyDetails = React.forwardRef<ClubAcademyDetailsHandle, {}>(functi
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} md={24} >
-                        <Form.Item name="sportOffered" label="Sport Offered ( Multiple Choses )" rules={[{ required: true }]}>
+                        <Form.Item name="sportOffered" label="Sport Offered (Check all that apply)" rules={[{ required: true }]}>
                             <Select
                                 suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                                 loading={isLoading}

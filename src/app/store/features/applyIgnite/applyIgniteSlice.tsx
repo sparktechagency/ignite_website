@@ -13,10 +13,11 @@ export interface ParentDetails {
     ParentLastName: string | null
     ParentEmail: string | null
     ParentPhone: string | null
-    ParentStreetAddress: string | null
-    ParentCity: string | null
-    ParentState: string | null
-    ParentZipCode: string | null
+    location: {
+        type: "Point",
+        coordinates: number[]
+    },
+    addressName: string | null,
     AnnualHouseholdIncome: number | string | null
 }
 
@@ -47,10 +48,11 @@ const initialState: ApplyIgniteState = {
         ParentLastName: null,
         ParentEmail: null,
         ParentPhone: null,
-        ParentStreetAddress: null,
-        ParentCity: null,
-        ParentState: null,
-        ParentZipCode: null,
+        location: {
+            type: "Point",
+            coordinates: [0, 0]
+        },
+        addressName: null,
         AnnualHouseholdIncome: null,
     },
     aboutChild: {
@@ -97,10 +99,11 @@ const applyIgniteSlice = createSlice({
                 ParentLastName: null,
                 ParentEmail: null,
                 ParentPhone: null,
-                ParentStreetAddress: null,
-                ParentCity: null,
-                ParentState: null,
-                ParentZipCode: null,
+                location: {
+                    type: "Point",
+                    coordinates: [0, 0]
+                },
+                addressName: null,
                 AnnualHouseholdIncome: null,
             }
             state.aboutChild = {

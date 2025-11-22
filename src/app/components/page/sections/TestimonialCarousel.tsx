@@ -109,7 +109,7 @@ const TestimonialCarousel: React.FC = memo(() => {
                                 className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm"
                             >
                                 <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 11V21.2832L6.15674 16.1484L12.3135 11.0137V5.86524V0.716797H6.15674H0V11ZM17.499 11V21.2832L23.6558 16.1484L29.8125 11.0137V5.86524V0.716797H23.6558H17.499V11Z" fill="#4F5D75" />
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M0 11V21.2832L6.15674 16.1484L12.3135 11.0137V5.86524V0.716797H6.15674H0V11ZM17.499 11V21.2832L23.6558 16.1484L29.8125 11.0137V5.86524V0.716797H23.6558H17.499V11Z" fill="#4F5D75" />
                                 </svg>
 
                             </motion.div>

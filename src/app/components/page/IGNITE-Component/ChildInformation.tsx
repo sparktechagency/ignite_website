@@ -23,7 +23,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
   const dispatch = useAppDispatch()
   const childInfo = useAppSelector(s => s.applyIgnite.childInfo)
   const [form] = Form.useForm<any>()
-  const { data: categoryData } = useGetCategoryQuery({ limit: 999, sort: 'name' })
+  const { data: categoryData, isLoading } = useGetCategoryQuery({ limit: 999, sort: 'name' })
 
   useEffect(() => {
     const mapped = {
@@ -36,7 +36,8 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
   React.useImperativeHandle(ref, () => ({
     validate: () => form.validateFields(),
   }), [form])
-  
+
+
   return (
     <>
       <div className='mb-4'>
@@ -69,6 +70,7 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
                 placeholder='Select Child’s Sport'
                 allowClear
                 size='large'
+                loading={isLoading}
                 options={categoryData?.data?.result?.length ? categoryData?.data?.result?.map((item: SportType) => ({
                   value: item._id,
                   label: item.name,
@@ -102,9 +104,31 @@ const ChildInformation = React.forwardRef<ChildInformationHandle, {}>(function C
         </Row>
         <Row gutter={16}>
           <Col xs={24} md={24}>
-            <Form.Item style={{ width: '100%' }} name="ChildsDateOfBirth" label="Date of Birth (YYYY-MM-DD)" rules={[{ required: true }]}>
-              <DatePicker  style={{ width: '100%' }} size="large" />
+            <Form.Item
+              style={{ width: '100%' }}
+              name="ChildsDateOfBirth"
+              label="Date of Birth (YYYY-MM-DD)"
+              rules={[
+                { required: true, message: "Date of birth is required" },
+                {
+                  validator(_, value) {
+                    if (!value) return Promise.resolve();
+                    const today = dayjs();
+                    const age = today.diff(value, "year");
+                    if (age < 5) {
+                      return Promise.reject("Child must be at least 5 years old.");
+                    }
+                    if (age > 18) {
+                      return Promise.reject("Child age cannot be more than 18 years.");
+                    }
+                    return Promise.resolve();
+                  }
+                }
+              ]}
+            >
+              <DatePicker style={{ width: '100%' }} size="large" />
             </Form.Item>
+
           </Col>
         </Row>
       </Form>

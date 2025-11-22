@@ -18,7 +18,7 @@ const AMOUNT_MAP: Record<Exclude<AmountTier, 'Custom'>, number> = {
 }
 
 function formatCurrency(n: number) {
-    return `$${n.toFixed(2)}`
+    return `$ ${n.toFixed(2)}`
 }
 
 function SupportAthletForm() {
