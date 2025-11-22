@@ -142,7 +142,7 @@ jobs:
             cd ~/applications/website
 
             # 1️⃣ Write .env file from JSON secret
-            echo "$ENV_VARS_JSON" | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > .env
+            ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/backend/.env"
 
             # 2️⃣ Install dependencies
             npm install
