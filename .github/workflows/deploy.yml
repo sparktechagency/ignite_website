@@ -161,4 +161,4 @@ jobs:
 
             # 6️⃣ Restart Nginx
             sudo systemctl restart nginx
-            EOF
+          EOF
