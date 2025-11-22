@@ -131,18 +131,18 @@ jobs:
         run: |
           rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
 
-      # 6️⃣ Deploy and build on EC2
+      # 6️⃣ Deploy, create .env, build, and restart on EC2
       - name: Build and Start on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
         run: |
-          ssh $EC2_USER@$EC2_HOST << 'EOF'
+          ssh $EC2_USER@$EC2_HOST << EOF
             cd ~/applications/website
 
             # 1️⃣ Write .env file from JSON secret
-            echo '$ENV_VARS_JSON' | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > .env
+            echo "$ENV_VARS_JSON" | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > .env
 
             # 2️⃣ Install dependencies
             npm install
@@ -161,4 +161,4 @@ jobs:
 
             # 6️⃣ Restart Nginx
             sudo systemctl restart nginx
-          EOF
+            EOF
