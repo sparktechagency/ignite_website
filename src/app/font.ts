@@ -10,5 +10,5 @@ const myCustomFont = localFont({
   ],
   variable: "--font-my-custom",
 });
-//
+//----
 export default myCustomFont;
