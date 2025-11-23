@@ -1,41 +1,47 @@
 import React, { memo, useState } from "react";
 import { Select, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlaceNameAndCoordinates } from "@/lib/getPlaceNameAndCoordinates";
+import { getPlaceSuggestions, getPlaceDetails } from "@/lib/getPlaceNameAndCoordinates";
 import { setParentDetails } from "@/app/store/features/applyIgnite/applyIgniteSlice";
 
 const PlaceSearch = () => {
     const dispatch = useDispatch();
     const parentDetails = useSelector((state: any) => state.applyIgnite.parentDetails);
+
     const [options, setOptions] = useState<any>([]);
     const [loading, setLoading] = useState(false);
 
     const handleSearch = async (value: string) => {
-        if (!value) return;
+        if (!value) {
+            setOptions([]);
+            return;
+        }
+
         setLoading(true);
-        const result = await getPlaceNameAndCoordinates(value);
+
+        const results = await getPlaceSuggestions(value);
         setLoading(false);
 
-        if (result) {
-            setOptions([
-                {
-                    value: JSON.stringify(result),
-                    label: result.name
-                }
-            ]);
-        }
+        setOptions(
+            results.map((place: any) => ({
+                label: place.name,
+                value: place.placeId,
+            }))
+        );
     };
 
-    const handleSelect = (value: string) => {
-        const place = JSON.parse(value);
+    const handleSelect = async (placeId: string) => {
+        const place = await getPlaceDetails(placeId);
+
+        if (!place) return;
 
         dispatch(
             setParentDetails({
                 guardianAddress: place.name,
                 location: {
                     type: "Point",
-                    coordinates: [place.longitude, place.latitude]
-                }
+                    coordinates: [place.longitude, place.latitude],
+                },
             })
         );
     };
@@ -46,13 +52,13 @@ const PlaceSearch = () => {
             <Select
                 size="large"
                 showSearch
-                value={parentDetails.guardianAddress || undefined}
                 placeholder="Search a place"
                 style={{ width: "100%" }}
                 onSearch={handleSearch}
                 onSelect={handleSelect}
                 filterOption={false}
                 notFoundContent={loading ? <Spin size="small" /> : null}
+                value={parentDetails.guardianAddress || undefined}
                 options={options}
             />
         </div>
