@@ -66,7 +66,7 @@ jobs:
             cd ~/applications/website
 
             # Write .env file
-            echo '$ENV_VARS_JSON' > .env
+            ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/website/.env"
 
             # Install dependencies
             npm install
