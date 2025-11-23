@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
@@ -18,30 +18,38 @@ jobs:
         with:
           node-version: "20.15"
 
-      - name: Install Dependencies
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
         run: npm install --frozen-lockfile
 
-      - name: Build Next.js Project
+      - name: Build Next.js project
         run: npm run build
+
+      - name: Archive project for deploy
+        run: tar -czf website.tar.gz . --exclude=node_modules --exclude=.git
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: website
+          path: website.tar.gz
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      - name: Checkout the repository again
+      - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.15"
-
-      - name: Install Dependencies
-        run: npm install --frozen-lockfile
-
-      - name: Build Next.js Project
-        run: npm run build
 
       - name: Set up SSH
         env:
@@ -52,27 +60,36 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy Full App and Restart on EC2
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: website
+          path: ./website
+
+      - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
         run: |
-          # Upload full project to EC2 (excluding node_modules and .git)
-          rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
+          # Copy archive to EC2
+          scp ./website/website.tar.gz $EC2_USER@$EC2_HOST:~/applications/website/
 
-          # Run remote setup and restart
-          ssh $EC2_USER@$EC2_HOST << EOF
+          # Remote commands
+          ssh $EC2_USER@$EC2_HOST << 'EOF'
           cd ~/applications/website
 
-          # Set the environment variables (using the ENV_VARS_JSON secret
-          # ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' > ~/applications/backend/.env"
-          ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/website/.env"
+          # Extract project
+          tar -xzf website.tar.gz
+          rm website.tar.gz
 
-          # Install dependencies
-          npm install
-           
-          # Build the app
+          # Write environment variables safely
+          printf '%s\n' "$ENV_VARS_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value|tostring)"' > .env
+
+          # Install production dependencies only
+          npm install --production
+
+          # Build Next.js production files
           npm run build
 
           # Install PM2 if missing
@@ -80,10 +97,9 @@ jobs:
             npm install -g pm2
           fi
 
-          # Restart app with PM2
-          pm2 delete website || true
-          pm2 start "npm start" --name website
+          # Zero-downtime restart
+          pm2 reload website || pm2 start "npm start" --name website
 
-          # Restart Nginx
+          # Restart Nginx (make sure sudo without password)
           sudo systemctl restart nginx
           EOF
