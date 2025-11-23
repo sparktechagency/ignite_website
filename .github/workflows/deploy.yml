@@ -1,92 +1,3 @@
-# name: Deploy Next.js Website to EC2
-
-# on:
-#     push:
-#         branches:
-#             - "main"
-
-# jobs:
-#     build:
-#         runs-on: ubuntu-latest
-
-#         steps:
-#             - name: Checkout the repository
-#               uses: actions/checkout@v3
-
-#             - name: Set up Node.js
-#               uses: actions/setup-node@v3
-#               with:
-#                   node-version: "20.15"
-
-#             - name: Install Dependencies
-#               run: npm install --frozen-lockfile
-
-#             - name: Build Next.js Project
-#               run: npm run build
-
-#     deploy:
-#         runs-on: ubuntu-latest
-#         needs: build
-
-#         steps:
-#             - name: Checkout the repository again
-#               uses: actions/checkout@v3
-
-#             - name: Set up Node.js
-#               uses: actions/setup-node@v3
-#               with:
-#                   node-version: "20.15"
-
-#             - name: Install Dependencies
-#               run: npm install --frozen-lockfile
-
-#             - name: Build Next.js Project
-#               run: npm run build
-
-#             - name: Set up SSH
-#               env:
-#                   SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-#               run: |
-#                   mkdir -p ~/.ssh
-#                   echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-#                   chmod 600 ~/.ssh/id_rsa
-#                   ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
-#             - name: Deploy Full App and Restart on EC2
-#               env:
-#                   EC2_HOST: ${{ secrets.EC2_HOST }}
-#                   EC2_USER: ${{ secrets.EC2_USER }}
-#                   ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
-#               run: |
-#                   # Upload full project to EC2 (excluding node_modules and .git)
-#                   rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
-
-#                   # Run remote setup and restart
-#                   ssh $EC2_USER@$EC2_HOST << 'EOF'
-#                     cd ~/applications/website
-
-#                     # Write .env file
-#                     echo '$ENV_VARS_JSON' > .env
-
-#                     # Install dependencies
-#                     npm install
-
-#                     # Build the app
-#                     npm run build
-
-#                     # Install PM2 if needed
-#                     if ! command -v pm2 &> /dev/null; then
-#                       npm install -g pm2
-#                     fi
-
-#                     # Restart app with PM2 on correct host and port
-#                     pm2 delete website || true
-#                     pm2 start "npm start" --name website
-
-#                     # Restart nginx
-#                     sudo systemctl restart nginx
-#                   EOF
-
 name: Deploy Next.js Website to EC2
 
 on:
@@ -95,25 +6,43 @@ on:
       - "main"
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
-      - name: Checkout Repository
+      - name: Checkout the repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.15"
 
-      # 3️⃣ Install dependencies locally (optional, for caching)
       - name: Install Dependencies
         run: npm install --frozen-lockfile
 
-      # 4️⃣ Set up SSH to EC2
+      - name: Build Next.js Project
+        run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout the repository again
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.15"
+
+      - name: Install Dependencies
+        run: npm install --frozen-lockfile
+
+      - name: Build Next.js Project
+        run: npm run build
+
       - name: Set up SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
@@ -123,42 +52,37 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      # 5️⃣ Upload project to EC2 (exclude node_modules and .git)
-      - name: Upload Project to EC2
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-        run: |
-          rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
-
-      # 6️⃣ Deploy, create .env, build, and restart on EC2
-      - name: Build and Start on EC2
+      - name: Deploy Full App and Restart on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
         run: |
-          ssh $EC2_USER@$EC2_HOST << EOF
+          # Upload full project to EC2 (excluding node_modules and .git)
+          rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
+
+          # Run remote setup and restart
+          ssh $EC2_USER@$EC2_HOST << 'EOF'
             cd ~/applications/website
 
-            # 1️⃣ Write .env file from JSON secret
-            ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/website/.env"
+            # Write .env file
+            echo '$ENV_VARS_JSON' > .env
 
-            # 2️⃣ Install dependencies
+            # Install dependencies
             npm install
 
-            # 3️⃣ Build the Next.js project
+            # Build the app
             npm run build
 
-            # 4️⃣ Install PM2 if not installed
+            # Install PM2 if needed
             if ! command -v pm2 &> /dev/null; then
               npm install -g pm2
             fi
 
-            # 5️⃣ Restart the app with PM2
+            # Restart app with PM2 on correct host and port
             pm2 delete website || true
             pm2 start "npm start" --name website
 
-            # 6️⃣ Restart Nginx
+            # Restart nginx
             sudo systemctl restart nginx
           EOF
