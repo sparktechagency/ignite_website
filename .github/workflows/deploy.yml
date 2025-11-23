@@ -62,11 +62,13 @@ jobs:
           rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:~/applications/website/
 
           # Run remote setup and restart
-          ssh $EC2_USER@$EC2_HOST << 'EOF'
+          ssh $EC2_USER@$EC2_HOST << EOF
             cd ~/applications/website
 
-            # Write .env file
-            echo '$ENV_VARS_JSON' > .env
+            # Convert JSON secret to .env
+            echo "$ENV_VARS_JSON" > env.json
+            jq -r 'to_entries | .[] | "\(.key)=\(.value)"' env.json > .env
+            rm env.json
 
             # Install dependencies
             npm install
