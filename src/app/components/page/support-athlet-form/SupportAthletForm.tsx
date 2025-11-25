@@ -96,7 +96,8 @@ function SupportAthletForm() {
                 toast.success(response?.message)
                 form.resetFields()
                 if (window !== undefined) {
-                    window.open(response?.data?.paymentUrl, '_blank')
+                    window.location.href = response?.data?.paymentUrl
+                    // window.open(response?.data?.paymentUrl, '_blank')
                 } else {
                     router.push(response?.data?.paymentUrl)
                 }
@@ -177,7 +178,7 @@ function SupportAthletForm() {
                     >
                         <Select
                             size='large'
-                            suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6'/>}
+                            suffixIcon={<MdOutlineKeyboardArrowDown className='w-6 h-6' />}
                             placeholder="Donation Frequency"
                             options={[
                                 { value: 'One-time', label: 'One-time' },

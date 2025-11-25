@@ -98,7 +98,8 @@ const ClubJoiningApply: React.FC = () => {
 
                 const paymentUrl = (res as any)?.data?.paymentUrl
                 if (typeof window !== 'undefined') {
-                    window.open(paymentUrl, '_blank')
+                    window.location.href = paymentUrl
+                    // window.open(paymentUrl, '_blank')
                 } else {
                     router.push(paymentUrl)
                 }
