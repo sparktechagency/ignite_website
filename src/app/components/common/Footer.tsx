@@ -120,7 +120,7 @@ const Footer = () => {
                                 {footerLinks.social.map((social) => {
                                     const Icon = social.icon;
                                     return (
-                                        <a
+                                        <Link
                                             key={social.label}
                                             href={social.href}
                                             target="_blank"
@@ -129,7 +129,7 @@ const Footer = () => {
                                             aria-label={`Follow us on ${social.label}`}
                                         >
                                             <Icon className="h-5 w-5" aria-hidden="true" />
-                                        </a>
+                                        </Link>
                                     );
                                 })}
                             </div>

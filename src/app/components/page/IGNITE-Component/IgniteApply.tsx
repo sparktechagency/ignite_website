@@ -24,7 +24,7 @@ const IgniteApply: React.FC = () => {
     const aboutRef = useRef<AboutYourChildHandle>(null)
     const [createNomination, { isLoading }] = useCreateNominationMutation()
     const [isSubmitted, setIsSubmitted] = useState(false)
-    console.log(applyIgnite?.parentDetails?.location)
+
     const renderStep = () => {
         switch (current) {
             case 0:

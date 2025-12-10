@@ -15,7 +15,7 @@ function DiscoverBanner({ title, description, listbutton, buttonText, route ,cla
                 className
             )}>
             <div className="absolute pointer-events-none inset-0">
-                <Image src={IMAGE.discoverBannerImage.src} alt="" fill className='object-cover' />
+                <Image src={IMAGE.discoverBannerImage.src} alt={title} fill className='object-cover' />
             </div>
             <div className='flex flex-col w-full gap-4'>
                 <h1

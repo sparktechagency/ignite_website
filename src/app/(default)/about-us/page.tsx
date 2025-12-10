@@ -4,6 +4,32 @@ import PageTopBanner from '@/app/components/status-banner/PageTopBanner'
 import MeetOurTeam from '@/app/components/page/sections/MeetOurTeam'
 import { IMAGE } from '@/app/constant/index.image'
 import Link from 'next/link'
+import { generatePageMetadata } from '@/app/lib/page-utils'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = generatePageMetadata({
+    title: 'About Us | IGNITE Foundation - Empowering Young Athletes',
+    description: 'Discover the story behind IGNITE Foundation and our mission to support young athletes through sports, education, and community development programs. Learn about our values, team, and impact.',
+    path: '/about-us',
+    keywords: [
+        'youth sports foundation',
+        'athlete development programs',
+        'youth empowerment through sports',
+        'community sports initiatives',
+        'sports education for youth',
+        'nonprofit youth organization',
+        'youth sports opportunities',
+        'athletic scholarships',
+        'youth mentorship programs',
+        'sports and education'
+    ],
+    image: {
+        url: '/images/og-about.jpg',
+        alt: 'IGNITE Foundation Team - Committed to Youth Development',
+        width: 1200,
+        height: 630
+    },
+});
 
 function Page() {
     return (

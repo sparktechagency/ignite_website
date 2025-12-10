@@ -4,6 +4,7 @@ import React from "react";
 import { ICONS } from "@/app/constant/index.image";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const stats = [
     {
@@ -74,14 +75,14 @@ function WhoWeAre() {
                     <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
                         At IGNITE Foundation, we break financial barriers so every child has the chance to compete, grow, and shine.
                     </p>
-                    <Button
-                        asChild
-                        className="bg-gradient-to-r text-white from-[#BF0A30] to-[#003F91] px-6 text-lg py-6 rounded cursor-pointer hover:!bg-white hover:!text-white"
-                    >
-                        <a href="/mission-vision" aria-label="Get started with our platform">
+                    <Link href="/mission-vision" >
+                        <Button
+                            asChild
+                            className="bg-gradient-to-r text-white from-[#BF0A30] to-[#003F91] px-6 text-lg py-6 rounded cursor-pointer hover:!bg-white hover:!text-white"
+                        >
                             Learn more
-                        </a>
-                    </Button>
+                        </Button>
+                    </Link>
                 </div>
 
                 {/* Right Content */}
