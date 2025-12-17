@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
       "api.ignitefoundation",
     ],
   },
-
+  productionBrowserSourceMaps: false,
   turbopack: {
     resolveExtensions: [
       '.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json', '.ttf', '.mp4'
