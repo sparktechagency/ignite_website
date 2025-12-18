@@ -112,7 +112,7 @@ jobs:
         with:
           node-version: "20.17"
 
-      # 3. Install dependencies locally (optional, can skip if building on EC2)
+      # 3. Install dependencies locally (optional)
       - name: Install Dependencies
         run: npm install --frozen-lockfile
 
@@ -160,7 +160,13 @@ jobs:
           # Start Next.js project with PM2
           ssh $EC2_USER@$EC2_HOST "cd ~/applications/website && pm2 start npm --name website -- start"
 
-      # 7. Optional: Save PM2 process list for auto-start on reboot
-      - name: Save PM2 Process List
+      # 7. Setup PM2 to auto-start on reboot
+      - name: Setup PM2 Startup on EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
         run: |
-          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "pm2 save && pm2 startup systemd -u ${{ secrets.EC2_USER }} --hp /home/${{ secrets.EC2_USER }}"
+          ssh $EC2_USER@$EC2_HOST "
+            sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u $EC2_USER --hp /home/$EC2_USER &&
+            pm2 save
+          "
