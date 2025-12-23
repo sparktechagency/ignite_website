@@ -6,6 +6,7 @@ import ReduxProvider from "./providers/ReduxProvider";
 import { ConfigProvider, ThemeConfig } from "antd";
 import Footer from "./components/common/Footer";
 import { Toaster } from "react-hot-toast";
+import ClickjackingFixed from "@/components/ui/ClickjackingFixed";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,27 +33,23 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   openGraph: {
     type: 'website',
-    locale: 'en_US',
-    url: siteUrl,
-    siteName,
-    title: siteName,
-    description: siteDescription,
+    url: 'https://protippz.com',
+    title: 'PROTIPPZ',
+    description: 'protippz',
     images: [
       {
-        url: `${siteUrl}/images/og-default.jpg`,
+        url: 'https://i.ibb.co.com/7JkBKFFR/brand-V2.webp',
         width: 1200,
         height: 630,
-        alt: siteName,
+        alt: 'Protippz',
       },
     ],
   },
-
   twitter: {
     card: 'summary_large_image',
-    title: siteName,
-    description: siteDescription,
-    creator: '@ignitefoundation',
-    images: [`${siteUrl}/images/og-default.jpg`],
+    title: 'PROTIPPZ',
+    description: 'protippz',
+    images: ['https://i.ibb.co.com/7JkBKFFR/brand-V2.webp'],
   },
 
   robots: {
@@ -145,9 +142,9 @@ export default function RootLayout({
           <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
           <Header />
           <ConfigProvider theme={themeConfig}>
-            <main>
+            <ClickjackingFixed>
               {children}
-            </main>
+            </ClickjackingFixed>
           </ConfigProvider>
           <Footer />
         </ReduxProvider>
